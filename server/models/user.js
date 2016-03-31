@@ -1,4 +1,6 @@
 //This function is invoked immediately and gets express passed in from server.js
+var knex = require('./db')
+
 module.exports = function(express) {
 
   var router = express.Router();
@@ -30,3 +32,5 @@ module.exports = function(express) {
 
   return router;
 }
+
+
