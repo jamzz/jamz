@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var userModel = require('./models/user')(express);
 var jamSessionModel = require('./models/jamSession')(express);
 var configEnvironment = require('./config/environment');
-var launchPostgreSQL = require('./config/postgres');
 
 //Production compatibility
 configEnvironment();

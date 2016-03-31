@@ -1,7 +1,7 @@
 var knex = require('./db');
 
 
-knex.schema.createTableIfNotExists('user', function(table) {
+knex.schema.createTableIfNotExists('users', function(table) {
   table.increments('id').primary();
   table.integer('userId');
   table.string('username');
@@ -14,12 +14,12 @@ knex.schema.createTableIfNotExists('user', function(table) {
 })
 .createTableIfNotExists('bands', function(table) {
   table.string('band');
-  table.foreign('user_id').references('id').inTable('user');
+  table.integer('user_id').references('id').inTable('users');
 })
 //user id is lower than friend id
 .createTableIfNotExists('user_friend', function(table) {
-  table.foreign('user_id').references('id').inTable('user');
-  table.foreign('friend_id').references('id').inTable('user');
+  table.integer('user_id').references('id').inTable('users');
+  table.integer('friend_id').references('id').inTable('users');
 })
 .createTableIfNotExists('session', function(table) {
   table.increments('id').primary();
@@ -35,23 +35,23 @@ knex.schema.createTableIfNotExists('user', function(table) {
   table.timestamps();
 })
 .createTableIfNotExists('session_user', function(table) {
-  table.foreign('session_id').references('id').inTable('session');
-  table.foreign('user_id').references('id').inTable('user');
+  table.integer('session_id').references('id').inTable('session');
+  table.integer('user_id').references('id').inTable('users');
 })
 
 .createTableIfNotExists('needInstrument', function(table) {
   table.string('instrument');
-  table.foreign('session_id').references('id').inTable('session');
+  table.integer('session_id').references('id').inTable('session');
 })
 
 .createTableIfNotExists('genre', function(table) {
   table.string('genre');
-  table.foreign('session_id').references('id').inTable('session');
+  table.integer('session_id').references('id').inTable('session');
 })
-// .then(function (result) {
-//   console.log('Successfully applied schema.');
-//   knex.destroy();
-// })
+.then(function (result) {
+  console.log('Successfully applied schema.');
+  knex.destroy();
+})
 .catch(function (error) {
   console.log('Warning: Database Error', error);
 });
@@ -63,6 +63,6 @@ knex.schema.createTableIfNotExists('user', function(table) {
 //   knex.schema.dropTable('session_user'),
 //   knex.schema.dropTable('user_friend')
 //   knex.schema.dropTable('bands'),
-//   knex.schema.dropTable('user'),
+//   knex.schema.dropTable('users'),
 // ])
 
