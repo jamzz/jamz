@@ -2,30 +2,40 @@ var express = require('express');
 var path = require('path');
 var Promise = require('bluebird');
 var bodyParser = require('body-parser');
+var userModel = require('./models/user');
+var jamSessionModel = require('./models/jamSession');
 
 var app = express();
 process.env.PORT = process.env.PORT || 1337;
 
 var sampleUserData = {
+  "userId": "sampleId",
   "name": "Bob",
-  "instrument": ["bass", "drums", "trombone"],
+  "picture": "http://picture",
+  "instruments": ["bass", "drums", "trombone"],
   "contactInfo": {
     "email": "stupidBob@places.com",
     "phone": "123-456-7890",
   },
-  "band": ["theSnazzyTurtles", "purpleTigers"],
-  "description": "I like cats and turtles."
+  "bands": ["theSnazzyTurtles", "purpleTigers"],
+  "description": "I like cats and turtles.",
+  "friends": [],
+  "sessions": []
 }
 
 var sampleSeshData = {
+  "sessionId": "sampleSeshId",
   "title": "Come jam with ppl",
-  "genre": ["jazz","rock","metal","classical"],
+  "genres": ["jazz","rock","metal","classical"],
   "date": "4/30/2016",
   "time": "23:59:59",
-  "paid": false,
-  "instrumentNeeded": ["flute"],
-  "description": ["We play lots of kinds of music because we hate the organizational system, man"],
-  "XP": ">9000"
+  "area": "Austin",
+  "location": "Stubs",
+  "paidAmount": 0,
+  "instrumentsNeeded": ["flute"],
+  "description": "We play lots of kinds of music because we hate the organizational system, man",
+  "experience": ">9000",
+  "participants": []
 }
 
 
@@ -42,12 +52,14 @@ app.get('/', function(req, res){
 })
 
 app.get('/sampleUserData', function(req,res){
-  res.send(sampleUserData)
+  res.send(sampleUserData);
 })
 
 app.get('/sampleSeshData', function(req,res){
-  res.send(sampleSeshData)
+  res.send(sampleSeshData);
 })
+
+app.use('/user', )
 
 app.listen(process.env.PORT, function(){
   console.log('Jamzz is listening on port', process.env.PORT);
