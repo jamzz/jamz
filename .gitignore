@@ -1,5 +1,7 @@
 node_modules/
 bower_components/
+client/lib/
+.DS_STORE
 *.log
 
 build/
