@@ -1,51 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="jamz">
 <head>
   <meta charset="utf-8">
   <title>Jamz</title>
+
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="./lib/bootstrap/dist/css/bootstrap.css">
+
 </head>
 
-<body ng-app="routerApp">
+<body>
 
 
-  <div class="navbar navbar-default" role="navigation" bs-navbar>
+  <nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Jamz</a>
+      <a class="navbar-brand" ui-sref="#">Jamz</a>
     </div>
     <ul class="nav navbar-nav">
-      <li data-match-route="/"><a href="#/">Home</a></li>
-      <li data-match-route="/profile"><a href="#/profile">Profile</a></li>
-      <li data-match-route="/users"><a href="#/users">Users</a></li>
-      <li data-match-route="/signin"><a href="#/signin">Login</a></li>
-      <li data-match-route="/logout"><a href="#/logout">Logout</a></li>
+      <li><a class='btn' ui-sref="home">HOME</a></li>
+      <li><a class='btn' ui-sref="profile">PROFILE</a></li>
+      <!-- <li data-match-route="/#/home"><a href="/#/home">Home</a></li>
+      <li data-match-route="/#/profile"><a href="/#/profile">Profile</a></li>
+      <li data-match-route="/#/users"><a href="/#/users">Users</a></li>
+      <li data-match-route="/#/signin"><a href="/#/signin">Login</a></li>
+      <li data-match-route="/#/logout"><a href="/#/logout">Logout</a></li> -->
     </ul>
-  </div>
+  </nav>
 
   <div class="container">
     <div ui-view></div>
   </div>
 
-  <script src="./lib/angular/angular.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.min.js"></script>
   <script src="./lib/angular-animate/angular-animate.js"></script>
   <script src="./lib/angular-cookies/angular-cookies.js"></script>
   <script src="./lib/angular-mocks/angular-mocks.js"></script>
   <script src="./lib/angular-resource/angular-resource.js"></script>
   <script src="./lib/angular-sanitize/angular-sanitize.js"></script>
-  <script src="./lib/angular-strap/dist/angular-strap.js"></script>
-  <script src="./lib/angular-strap/dist/angular-strap.tpl.js"></script>
   <script src="./lib/angular-touch/angular-touch.js"></script>
-  <script src="./lib/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="./lib/ui-bootstrap-tpls-1.2.5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+  <script src="./lib/ui-bootstrap/ui-bootstrap-tpls-1.2.5.min.js"></script>
 
   <script src="app/app.js"></script>
   <script src="app/home/home.js"></script>
-  <script src="app/users/users.js"></script>
   <script src="app/profile/profile.js"></script>
-  <script src="app/auth/auth.js"></script>
-  <script src="app/services/services.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" type="text/css" href="./lib/bootstrap/dist/css/bootstrap.css">
+  <!-- <script src="app/users/users.js"></script> -->
+  <!-- <script src="app/auth/auth.js"></script> -->
+  <!-- <script src="app/services/services.js"></script> -->
 
 </body>
 </html>
