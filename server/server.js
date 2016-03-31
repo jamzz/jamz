@@ -7,9 +7,11 @@ var bodyParser = require('body-parser');
 //Local
 var userModel = require('./models/user')(express);
 var jamSessionModel = require('./models/jamSession')(express);
+var configEnvironment = require('./config/environment');
+var launchPostgreSQL = require('./config/postgres');
 
 //Production compatibility
-process.env.PORT = process.env.PORT || 1337;
+configEnvironment();
 
 var app = express();
 
@@ -41,6 +43,7 @@ app.listen(process.env.PORT, function(){
 function configTestData() {
   var sampleUserData = {
     "userId": "sampleId",
+    "username": "bob125"
     "name": "Bob",
     "picture": "http://picture",
     "instruments": ["bass", "drums", "trombone"],

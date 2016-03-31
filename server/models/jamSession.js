@@ -1,7 +1,9 @@
 //This function is invoked immediately and gets express passed in from server.js
+var knex = require('./db')
+
 module.exports = function(express) {
 
-	var router = express.Router();
+  var router = express.Router();
 
   router.route('/')
     .get(function(req, res){
@@ -28,5 +30,5 @@ module.exports = function(express) {
     res.status(200).send('session was recieved with this id: ' + req.params.id + ". This endpoint will eventually return the sessions data.  If not found, 404.");
   })
 
-	return router;
+  return router;
 }
