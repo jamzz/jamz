@@ -23,10 +23,7 @@ app.use( bodyParser.urlencoded({ extended: true }) );
 app.use('/user', userModel);
 app.use('/session', jamSessionModel);
 
-//Main
-app.get('/', function(req, res){
-  res.send();
-})
+
 
 //Serve test data
 configTestData();
