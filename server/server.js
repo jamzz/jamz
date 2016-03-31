@@ -15,7 +15,7 @@ var sampleUserData = {
   "instruments": ["bass", "drums", "trombone"],
   "contactInfo": {
     "email": "stupidBob@places.com",
-    "phone": "123-456-7890",
+    "phone": "123-456-7890"
   },
   "bands": ["theSnazzyTurtles", "purpleTigers"],
   "description": "I like cats and turtles.",
