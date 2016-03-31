@@ -46,7 +46,7 @@ app.listen(process.env.PORT, function(){
 function configTestData() {
   var sampleUserData = {
     "userId": "sampleId",
-    "username": "bob125"
+    "username": "bob125",
     "name": "Bob",
     "picture": "http://picture",
     "instruments": ["bass", "drums", "trombone"],

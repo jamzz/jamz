@@ -1,5 +1,5 @@
 //This function is invoked immediately and gets express passed in from server.js
-var knex = require('./db')
+var knex = require('../db')
 
 module.exports = function(express) {
 
