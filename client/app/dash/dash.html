@@ -1,13 +1,20 @@
 <div class="container">
-  <div class="create">
-    <h1>Create Session</h1>
+  <h1>My Dashboard</h1>
 
-    <br>
-    <form name="createSession" ng-model="jamz">
-      <input type="text">
-    </form>
+  <div>
+    <button type="button" class="btn btn-default" ng-click="createCollapsed = !createCollapsed">Create a Session</button>
+    <hr>
+    <div uib-collapse="createCollapsed">
+      <div class="well well-lg">
+        <div ui-view="create"></div>
+      </div>
+    </div>
   </div>
-  <div class="mine">
+
+  <!-- <div ui-view></div> -->
+
+<!--   <div class="my-sessions">
     <h1>My Sessions</h1>
-  </div>
+  </div> -->
+
 </div>
