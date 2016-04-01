@@ -5,15 +5,17 @@ angular.module('jamz.dash-create', [])
     $scope.genres = [];
 
     $scope.createSession = function() {
-      var check = ("Are you sure you want to create this session?");
+      var check = confirm("Are you sure you want to create this session?");
 
       if (check) {
         var genres = $scope.genres
           .split(',')
           .map(function(val){ return val.trim(); })
+          .filter(function(val){ return val !== '' });
         var instruments = $scope.instruments
           .split(',')
           .map(function(val){ return val.trim(); })
+          .filter(function(val){ return val !== '' });
 
         var session = {
           title: $scope.title,
