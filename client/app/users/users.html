@@ -3,8 +3,32 @@
 
   <div>
     <div class="users container" ng-repeat="user in users">
-      <div>
-        {{users.users}}
+      <div class="col-sm-4">
+        <div>Instruments:
+          <div ng-repeat="instrument in user.instruments">
+            {{instrument}}
+          </div>
+        </div>
+        <div ng-repeat="session in user.sessions">
+          {{session}}
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div>Bands:
+          <div ng-repeat="band in user.bands">
+            {{band}}
+          </div>
+        </div>
+        <div>Friends:
+          <div ng-repeat="friend in user.friends">
+            {{friend}}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div><img src='{{user.picture}}'></div>
+        <div>{{user.name}}</div>
+        <div>{{user.contactInfo.email}}</div>
       </div>
     </div>
-</div>
+  </div>
