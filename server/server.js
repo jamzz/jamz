@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var userModel = require('./models/user')(express);
 var jamSessionModel = require('./models/jamSession')(express);
 var configEnvironment = require('./config/environment');
+var authMW = require('./config/auth');
 
 //Production compatibility
 configEnvironment();
@@ -19,11 +20,25 @@ app.use( express.static(path.join(__dirname,'../client')) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
 
+//Set up authentication middleware
+authMW(app, express);
+
 //Routers
 app.use('/user', userModel);
 app.use('/session', jamSessionModel);
 
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res) {
+  console.log("login");
+  res.redirect('/');
+});
 
+app.get('/logout', function(){
+
+})
+
+app.post('/signup', function(){
+
+})
 
 //Serve test data
 configTestData();
@@ -40,6 +55,7 @@ app.listen(process.env.PORT, function(){
 
 
 function configTestData() {
+
   var sampleUserData = {
     "userId": "sampleId",
     "username": "bob125",

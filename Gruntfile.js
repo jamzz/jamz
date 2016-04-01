@@ -44,6 +44,9 @@ module.exports = function(grunt) {
       init_schemas: {
         cmd: 'node server/schema.js'
       },
+      seed_db: {
+        cmd: 'node server/seeds/seeder.js'
+      },
       launch_app: {
         cmd: 'npm start'
       }
@@ -67,5 +70,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-fixmyjs');
 
   grunt.registerTask('default',  ['jshint', 'exec:init_db', 'exec:run_db']);
-  grunt.registerTask('launch',   ['exec:config_db', 'exec:init_schemas', 'exec:launch_app']);
+  grunt.registerTask('launch',   ['exec:config_db', 'exec:init_schemas', 'exec:seed_db', 'exec:launch_app']);
 };
