@@ -17,7 +17,6 @@ angular.module("jamz.services", [])
     return {
       getSessions: getSessions
     }
-
   })
 
   .factory('Users', function($http) {
@@ -29,4 +28,12 @@ angular.module("jamz.services", [])
 
     }
 
+  })
+
+
+  .factory('Dash', function($http) {
+
+    return {
+
+    }
   })
