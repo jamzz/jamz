@@ -3,6 +3,7 @@ module.exports = function(db){
     {
       userId: 3464257,
       username: "bob1234",
+      password: "testPasswordBob",
       name:"bob",
       description:"I live in austin",
       picture:"http://catpicture.jpg",
@@ -12,6 +13,7 @@ module.exports = function(db){
     {
       userId: 23457,
       username: "jack1234",
+      password: "testPasswordJack",
       name:"jack",
       description:"I am visiting austin",
       picture:"http://dogpicture.jpg",
