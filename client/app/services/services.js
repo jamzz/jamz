@@ -21,18 +21,20 @@ angular.module("jamz.services", [])
       getSessions: getSessions
     }
 
-  });
+  })
 
   .factory('Users', function($http) {
 
     var Users = [];
 
     var getUsers = function () {
+      console.log("trying to work")
       return $http({
         method: 'GET',
         url: '/sampleUserData'
       })
       .then(function(data) {
+        console.log("heres your data", data)
         return data.data;
       })
       .catch(function(err) {
