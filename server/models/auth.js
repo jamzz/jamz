@@ -18,21 +18,25 @@ module.exports = function(express) {
 
       var username = req.body.username;
       var password = req.body.password;
-
+      //jack1234
       db('users').where({username: username}).select('username', 'password')
-      .then(function(data){
-        //if data doesn't exist, send 4xx response with a message.
-        //else use bcrypt.compare to compare passwords. If it is not a match send the 4xx
-        compare("B4c0/\/", hash)
-        .then(function(result){
-          if(result) {
-            res.cookies
-            res.status(200).send();
-          }
+      .then(function(row){
+        console.log("data retrieved", row[0])
+        if(row[0].username === null || row[0].username === undefined)
+          res.status(400).send("failed login")
 
-          res.status(400).send();
-        })
-        res.status(200).send("You found logged in");
+        return compare(password, row[0].password)
+      })
+      .then(function(result){
+        if(result) {
+          // res.cookies
+          res.status(200).send();
+        }
+
+        res.status(400).send();
+      })
+      .catch(function(err){
+        console.log("login had problems", err);
       });
     })
     //because front end dev's are people too
@@ -53,12 +57,29 @@ module.exports = function(express) {
   //   })
 
   router.route('/signup')
-    .post(function(req, res) {
+    .post(function(req, res){
       if(! req || !req.body || !req.body.username || !req.body.password) {
-        res.status(400).send("/auth/signup expected a body with a username and password key");
+        res.status(400).send("/auth/login expected a body with a username and password key");
       }
 
-      res.status(201).send("You found the endpoint for signung up");
+      var username = req.body.username;
+      var password = req.body.password;
+      //jack1234
+      db('users').where({username: username}).select('username')
+      .then(function(row){
+        console.log("data retrieved", row[0])
+        if(row[0].username !== null || row[0].username !== undefined)
+          res.status(400).send("failed signup")
+
+        return hash( password, null, null )
+      })
+      .then(function(result){
+        //put password in database
+        res.status(201).send();
+      })
+      .catch(function(err){
+        console.log("login had problems", err);
+      })
     })
     .all(function(req, res){
       res.status(404).send("Try using the POST method.")
