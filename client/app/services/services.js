@@ -12,21 +12,36 @@ angular.module("jamz.services", [])
       .then(function(data){
         return data.data
       })
-    }
+      .catch(function(err) {
+        console.error(err)
+      })
+    };
 
     return {
       getSessions: getSessions
     }
 
-  })
+  });
 
   .factory('Users', function($http) {
 
     var Users = [];
 
+    var getUsers = function () {
+      return $http({
+        method: 'GET',
+        url: '/sampleUserData'
+      })
+      .then(function(data) {
+        return data.data;
+      })
+      .catch(function(err) {
+        console.error(err);
+      })
+    };
 
     return {
-
+      getUsers: getUsers
     }
 
   })
