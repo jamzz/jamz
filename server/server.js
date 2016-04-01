@@ -29,6 +29,8 @@ app.use(session(
   }
 ))
 
+
+
 //Routers
 app.use('/user', userModel);
 app.use('/session', jamSessionModel);
@@ -46,6 +48,7 @@ app.listen(process.env.PORT, function(){
   console.log('GET  /  /sampleSeshData  /sampleUserData  /user/  /user/:id  /session/  /session/:id ');
   console.log('POST /session/create  /auth/login  /auth/logout  /auth/signup');
 });
+
 
 
 function configTestData() {
@@ -90,6 +93,13 @@ function configTestData() {
 
     res.send(users);
   })
+
+// var db = require('./db');
+// //jack1234
+// db('users').select('*')
+// .then(function(row){
+//   console.log("data retrieved", row)
+// })
 
   app.get('/sampleSeshData', function(req,res){
     //they wanted a list

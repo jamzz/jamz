@@ -4,6 +4,9 @@ angular.module('jamz', [
     'jamz.profile',
     'jamz.services',
     'jamz.dash',
+    'jamz.dash-create',
+    'ngAnimate',
+    'ui.bootstrap',
     'ui.router'
   ])
 
@@ -33,11 +36,17 @@ angular.module('jamz', [
 
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: 'app/dash/dash.html',
-      controller: 'DashCtrl'
+      views: {
+        '': {
+          templateUrl: 'app/dash/dash.html',
+          controller: 'DashCtrl'
+        },
+        'create@dashboard': {
+          templateUrl: 'app/dash/dash-create.html',
+          controller: 'CreateCtrl'
+        }
+      }
     })
-
-
 
 });
 
