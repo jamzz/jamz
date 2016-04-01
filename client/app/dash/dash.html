@@ -1,20 +1,18 @@
 <div class="container">
-  <h1>My Dashboard</h1>
+  <h1 class="jumbotron">My Dashboard</h1>
 
   <div>
     <button type="button" class="btn btn-default" ng-click="createCollapsed = !createCollapsed">Create a Session</button>
-    <hr>
+    <!-- <hr> -->
     <div uib-collapse="createCollapsed">
-      <div class="well well-lg">
+      <p><div class="well well-lg">
         <div ui-view="create"></div>
-      </div>
+      </div></p>
     </div>
   </div>
-
-  <!-- <div ui-view></div> -->
-
-<!--   <div class="my-sessions">
-    <h1>My Sessions</h1>
-  </div> -->
+  <hr>
+  <div class="my-sessions">
+    <h1 class="jumbotron">My Sessions</h1>
+  </div>
 
 </div>
