@@ -1,6 +1,5 @@
 var knex = require('./db');
 
-
 knex.schema.createTableIfNotExists('users', function(table) {
   table.increments('id').primary();
   table.integer('userId');

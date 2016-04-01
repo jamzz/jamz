@@ -28,8 +28,11 @@ module.exports = function(grunt) {
       run_db: {
         cmd: 'postgres -D dev_db/'
       },
+      drop_db: {
+        cmd: 'dropdb dev_db/'
+      },
       config_db: {
-        cmd: 'createdb dev_db/'
+        cmd: 'createdb dev_db'
       },
       init_schemas: {
         cmd: 'node server/schema.js'
@@ -56,6 +59,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-fixmyjs');
 
-  grunt.registerTask('default', ['jshint', 'watch', 'exec:init_db', 'exec:run_db']);
-  grunt.registerTask('launch', ['exec:config_db', 'exec:init_schemas', 'exec:launch_app']);
+  grunt.registerTask('default',  ['jshint', 'exec:init_db', 'exec:run_db']);
+  grunt.registerTask('launch',   ['exec:config_db', 'exec:init_schemas', 'exec:launch_app']);
 };
