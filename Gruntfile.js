@@ -1,5 +1,12 @@
 module.exports = function(grunt) {
- // require('load-grunt-tasks')(grunt);
+  /* Instructions:
+  Run 'grunt' in a terminal tab
+  Run 'grunt' launch in a second tab
+
+
+  DISCLAIMER: This grunt file will deal with initial setup of the database.
+    In order for it to work after the database exists, you must delete the whole thing.
+  */
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
