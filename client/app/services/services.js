@@ -9,6 +9,9 @@ angular.module("jamz.services", [])
         method: 'GET',
         url: '/sampleSeshData'
       })
+      .then(function(data){
+        return data.data
+      })
     }
 
     return {
