@@ -7,9 +7,10 @@ angular.module("jamz.services", [])
     var getSessions = function () {
       return $http({
         method: 'GET',
-        url: '/sampleSeshData'
+        url: '/session'
       })
       .then(function(data){
+        console.log("data.data: ", data.data)
         return data.data
       })
       .catch(function(err) {
