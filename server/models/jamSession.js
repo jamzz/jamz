@@ -1,5 +1,5 @@
 //This function is invoked immediately and gets express passed in from server.js
-var knex = require('../db')
+var db = require('../db')
 
 module.exports = function(express) {
 
@@ -8,6 +8,7 @@ module.exports = function(express) {
   router.route('/')
     .get(function(req, res){
       res.status(200).send("You found the endpoint for returning all sessions");
+      db.select('*').from('session')
     })
     //because front end dev's are people too
     .all(function(req, res){

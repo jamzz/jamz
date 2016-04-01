@@ -1,14 +1,15 @@
 //Packages
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
-var Promise = require('bluebird');
+var uuid = require('uuid');
 var bodyParser = require('body-parser');
 
 //Local
+var authModel = require('./models/auth')(express);
 var userModel = require('./models/user')(express);
 var jamSessionModel = require('./models/jamSession')(express);
 var configEnvironment = require('./config/environment');
-var authMW = require('./config/auth');
 
 //Production compatibility
 configEnvironment();
@@ -19,26 +20,19 @@ var app = express();
 app.use( express.static(path.join(__dirname,'../client')) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
-
-//Set up authentication middleware
-authMW(app, express);
+app.use(session(
+  {
+    genid: uuid.v4,
+    secret: 'sosecretyoudneverguessitlikeforreal',
+    resave: true,
+    saveUninitialized: true
+  }
+))
 
 //Routers
 app.use('/user', userModel);
 app.use('/session', jamSessionModel);
-
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res) {
-  console.log("login");
-  res.redirect('/');
-});
-
-app.get('/logout', function(){
-
-})
-
-app.post('/signup', function(){
-
-})
+app.use('/auth', authModel);
 
 //Serve test data
 configTestData();
@@ -50,7 +44,7 @@ app.listen(process.env.PORT, function(){
   console.log('');
   console.log('--ENDPOINTS--');
   console.log('GET  /  /sampleSeshData  /sampleUserData  /user/  /user/:id  /session/  /session/:id ');
-  console.log('POST /user/create  /session/create');
+  console.log('POST /session/create  /auth/login  /auth/logout  /auth/signup');
 });
 
 
