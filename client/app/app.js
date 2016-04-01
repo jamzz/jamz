@@ -24,6 +24,12 @@ angular.module('jamz', [
       controller: 'ProfileCtrl'
     })
 
+    .state('users',  {
+      url: '/users',
+      templateUrl: 'app/users/users.html',
+      controller: 'UsersCtrl'
+    })
+
 
 
 });
