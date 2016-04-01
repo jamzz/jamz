@@ -1,7 +1,22 @@
+h5 {
+  font-size: 5px;
+}
 .sessions {
   margin: 10px;
   text-align: center;
   padding: 5px;
   background-color:#F8F8F8;
   border-radius: 4.20px;
+}
+.users{
+  margin: 10px;
+/*  text-align: center;*/
+  padding: 5px;
+  background-color:#F8F8F8;
+  border-radius: 4.20px;
+}
+.btn {
+  margin: 5px;
+  height: 30px;
+  padding-bottom: 5px;
 }
