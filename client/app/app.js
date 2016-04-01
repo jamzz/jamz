@@ -1,6 +1,8 @@
 angular.module('jamz', [
     'jamz.home',
+    'jamz.users',
     'jamz.profile',
+    'jamz.services',
     'ui.router'
   ])
 
@@ -12,14 +14,14 @@ angular.module('jamz', [
 
     .state('home', {
       url: '/home',
-      templateUrl: 'app/home/home.html'
-      // controller: 'MainCtrl'
+      templateUrl: 'app/home/home.html',
+      controller: 'MainCtrl'
     })
 
     .state('profile',  {
       url: '/profile',
-      templateUrl: 'app/profile/profile.html'
-      // controller: 'ProfileCtrl'
+      templateUrl: 'app/profile/profile.html',
+      controller: 'ProfileCtrl'
     })
 
 

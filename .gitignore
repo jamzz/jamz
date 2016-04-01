@@ -3,6 +3,7 @@ bower_components/
 client/lib/
 .DS_STORE
 *.log
+dev_db/
 
 build/
 dist/
