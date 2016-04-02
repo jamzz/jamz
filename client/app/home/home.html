@@ -7,24 +7,24 @@
         <div>{{session.title}}</div>
         <div>{{session.date}}</div>
         <div>{{session.area}}</div>
-        <div>Genres:
+        <div><h5>Genres:</h5>
           <div ng-repeat="genre in session.genres">
             <em>{{genre}},</em>
           </div>
         </div>
       </div>
       <div class='col-sm-4'>
-        <div>Instruments Needed:
+      <div><h5>Instruments Needed:</h5>
           <div ng-repeat="instrument in session.instrumentsNeeded">
             <em>{{instrument}}</em>
           </div>
         </div>
       </div>
       <div class='col-sm-4'>
-        <div>Where:
-          <a href="https://www.stubbsaustin.com">{{session.location}}</a>
+        <div><h5>Where:</h5>
+          <a href="http://www.stubbsaustin.com">{{session.location}}</a>
         </div>
-        Description:
+          <h5>Description:</h5>
         <div>{{session.description}}</div>
       </div>
     </div>
