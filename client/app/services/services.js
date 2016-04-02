@@ -7,13 +7,14 @@ angular.module("jamz.services", [])
     var getSessions = function () {
       return $http({
         method: 'GET',
-        url: '/sampleSeshData'
+        url: '/session'
       })
       .then(function(data){
+        console.log("data.data: ", data.data);
         return data.data
       })
       .catch(function(err) {
-        console.error(err)
+        console.error(err);
       })
     };
 
@@ -33,7 +34,7 @@ angular.module("jamz.services", [])
         url: '/sampleUserData'
       })
       .then(function(data) {
-        console.log("heres your data", data)
+        console.log("heres your data", data);
         return data.data;
       })
       .catch(function(err) {
@@ -50,8 +51,24 @@ angular.module("jamz.services", [])
 
   .factory('Dash', function($http) {
 
-    return {
+    var createSession = function(data) {
+      return $http({
+        method: 'POST',
+        url: '/session/create',
+        data: {
+          newSession: data
+        }
+      })
+      .then(function(data){
+        console.log("data returned from createSession:", data);
+      })
+      .catch(function(err){
+        console.log("err", err);
+      })
+    }
 
+    return {
+      createSession: createSession
     }
   })
 
