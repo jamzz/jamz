@@ -1,21 +1,25 @@
 <div class="container">
 
-  <h1 class="jumbotron">Profile</h1>
-  <div class="profile container">
-    <div>
-        <span class="glyphicon glyphicon-pencil"></span> <strong> {{ profile.name}}</strong>
+    <h1 class="jumbotron">Profile</h1>
+    <div class="profile container">
+        <div>
+            <strong> {{profile.name  }}  <a></strong><span class="glyphicon glyphicon-pencil"></span></a>
+        </div>
+        <h5>Instruments: <a><span class="glyphicon glyphicon-pencil"></span></a></h5>
+        <div ng-repeat="instrument in profile.instruments">
+            {{instrument}}
+        </div>
+        <div>
+            <h5>My sessions: <a><span class="glyphicon glyphicon-pencil"></span></a></h5>
+        </div>
+        <div ng-repeat="session in profile.sessions">
+            {{session}}
+        </div>
+        <div>
+            <h5>My bands: <a><span class="glyphicon glyphicon-pencil"></span></a></h5>
+        </div>
+        <div ng-repeat="band in profile.bands">
+            {{band}}
+        </div>
     </div>
-    <a><span class="glyphicon glyphicon-pencil"></span></a><h5>  Instruments:</h5>
-    <div ng-repeat="instrument in profile.instruments">
-         {{instrument}}
-    </div>
-    <div><h5>My sessions:  </h5> <span class="glyphicon glyphicon-pencil"></span></div>
-    <div ng-repeat="session in profile.sessions">
-        {{session}}
-    </div>
-    <div><h5>My bands: </h5> <span class="glyphicon glyphicon-pencil"></span></div>
-    <div ng-repeat="band in profile.bands">
-    {{band}}
-    </div>
-  </div>
 </div>
