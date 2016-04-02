@@ -18,6 +18,7 @@ angular.module('jamz.dash-create', [])
           .map(function(val){ return val.trim(); })
           .filter(function(val){ return val !== '' });
 
+          // not handling arrays
         var session = {
           sessionId: 1,
           title: $scope.title,
@@ -34,6 +35,7 @@ angular.module('jamz.dash-create', [])
 
         Dash.createSession(session)
         .then(function(data){
+          //reset data when successfully created
           $scope.title = '';
           $scope.description = '';
           $scope.genres = [];
