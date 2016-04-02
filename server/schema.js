@@ -15,7 +15,7 @@ knex.schema.createTableIfNotExists('users', function(table) {
 .createTableIfNotExists('instrument', function(table){
   table.increments('id').primary();
   table.string("instrument");
-  table.integer("user_id");
+  table.integer("user_id").references('id').inTable('users');
 })
 
 .createTableIfNotExists('band', function(table) {
