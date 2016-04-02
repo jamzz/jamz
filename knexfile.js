@@ -5,6 +5,9 @@ module.exports = {
       host: 'localhost',
       port: 5432,
       database: 'dev_db'
+    },
+    seeds: {
+      directory: './seeds/dev'
     }
   }
 };

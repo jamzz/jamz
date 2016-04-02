@@ -1,10 +1,10 @@
 var knex = require('./db');
 
-
 knex.schema.createTableIfNotExists('users', function(table) {
   table.increments('id').primary();
   table.integer('userId');
   table.string('username');
+  table.string('password')
   table.string('name');
   table.string('description');
   table.string('picture');
@@ -12,12 +12,20 @@ knex.schema.createTableIfNotExists('users', function(table) {
   table.string('contactPhone');
   table.timestamps();
 })
-.createTableIfNotExists('bands', function(table) {
+.createTableIfNotExists('instrument', function(table){
+  table.increments('id').primary();
+  table.string("instrument");
+  table.integer("user_id").references('id').inTable('users');
+})
+
+.createTableIfNotExists('band', function(table) {
+  table.increments('id').primary();
   table.string('band');
   table.integer('user_id').references('id').inTable('users');
 })
 //user id is lower than friend id
 .createTableIfNotExists('user_friend', function(table) {
+  table.increments('id').primary();
   table.integer('user_id').references('id').inTable('users');
   table.integer('friend_id').references('id').inTable('users');
 })
@@ -32,19 +40,21 @@ knex.schema.createTableIfNotExists('users', function(table) {
   table.string('location');
   table.string('description');
   table.string('experience');
+  table.string('owner'); //id vs username vs name
   table.timestamps();
 })
 .createTableIfNotExists('session_user', function(table) {
+  table.increments('id').primary();
   table.integer('session_id').references('id').inTable('session');
   table.integer('user_id').references('id').inTable('users');
 })
-
 .createTableIfNotExists('needInstrument', function(table) {
+  table.increments('id').primary();
   table.string('instrument');
   table.integer('session_id').references('id').inTable('session');
 })
-
 .createTableIfNotExists('genre', function(table) {
+  table.increments('id').primary();
   table.string('genre');
   table.integer('session_id').references('id').inTable('session');
 })
