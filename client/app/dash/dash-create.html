@@ -1,50 +1,46 @@
-<div>
+<div class='row'>
 
-  <!-- <form> -->
-    <div class='row'>
-      <div class='col-sm-3'>
-        <p>Session Name:<br>
-        <input type='text' placeholder='Session Name' ng-model='title'></p>
+  <div class='col-sm-3'>
+    <p>Session Name:<br>
+    <input type='text' placeholder='Session Name' ng-model='title'></p>
 
-        <p>Description:<br>
-        <input type='text' placeholder='Description' ng-model='description'></p>
+    <p>Description:<br>
+    <input type='text' placeholder='Description' ng-model='description'></p>
 
-        <p>Genres:<br>
-        <input type='text' placeholder='Genres' ng-model='genres'>
-        <br>*Separate by Commas</p>
-      </div>
+    <p>Genres:<br>
+    <input type='text' placeholder='Genres' ng-model='genres'>
+    <br>*Separate by Commas</p>
+  </div>
 
-      <div class='col-sm-3'>
+  <div class='col-sm-3'>
 
-        <p>Paid amount:<br>
-        <input type='text' placeholder='Paid Amount' ng-model='amount'></p>
+    <p>Paid amount in USD:<br>
+    <input type='number' placeholder='Paid Amount' ng-model='amount'></p>
 
-        <p>Experience:<br>
-        <input type='text' placeholder='Experience' ng-model='experience'></p>
+    <p>Experience:<br>
+    <input type='text' placeholder='Experience' ng-model='experience'></p>
 
-        <p>Instruments Needed:<br>
-        <input type='text' placeholder='Instruments' ng-model='instruments'>
-        <br>*Separate by Commas</p>
-      </div>
+    <p>Instruments Needed:<br>
+    <input type='text' placeholder='Instruments' ng-model='instruments'>
+    <br>*Separate by Commas</p>
+  </div>
 
-      <div class='col-sm-3'>
-        <p>City:<br>
-        <input type='text' placeholder='City' ng-model='city'></p>
+  <div class='col-sm-3'>
+    <p>City:<br>
+    <input type='text' placeholder='City' ng-model='city'></p>
 
-        <p>Location:<br>
-        <input type='text' placeholder='Location' ng-model='location'></p>
-      </div>
+    <p>Location:<br>
+    <input type='text' placeholder='Location' ng-model='location'></p>
+  </div>
 
-      <div class='col-sm-3'>
-        <p>Date:<br>
-        <input type='text' placeholder='Date' ng-model='date'></p>
+  <div class='col-sm-3'>
+    <p>Date:<br>
+    <input type='text' placeholder='Date' ng-model='date'></p>
 
-        <p>Time:<br>
-        <input type='text' placeholder='Time' ng-model='time'></p>
+    <p>Time:<br>
+    <input type='text' placeholder='Time' ng-model='time'></p>
 
-        <p><br><button ng-click='createSession()'>Create Session</button></p>
-      </div>
-    </div>
+    <p><br><button ng-click='createSession()'>Create Session</button></p>
+  </div>
 
-  <!-- </form> -->
 </div>
