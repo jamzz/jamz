@@ -1,4 +1,5 @@
 angular.module('jamz', [
+    'jamz.auth',
     'jamz.home',
     'jamz.users',
     'jamz.profile',
@@ -10,11 +11,23 @@ angular.module('jamz', [
     'ui.router'
   ])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
+
+    .state('signup', {
+      url: '/signup', 
+      templateUrl: 'app/auth/signup.html', 
+      controller: 'AuthCtrl'
+    })
+
+    .state('signin', {
+      url: '/signin', 
+      templateUrl: 'app/auth/signin.html', 
+      controller: 'AuthCtrl'
+    })
 
     .state('home', {
       url: '/home',
@@ -50,4 +63,4 @@ angular.module('jamz', [
 
 });
 
-console.log('help')
+// console.log('help')

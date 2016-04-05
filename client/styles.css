@@ -1,6 +1,9 @@
 h5 {
   font-size: 5px;
 }
+input {
+  border-radius: 4.20px;
+}
 .sessions {
   margin: 10px;
   text-align: center;
@@ -21,6 +24,13 @@ h5 {
   padding: 5px;
   background-color:#F8F8F8;
   border-radius: 4.20px;
+}
+.login-box {
+  display: block;
+  text-align: center;
+  background-color: #F8F8F8;
+  max-width: 415px;
+  max-height: 350px;
 }
 .btn-instruments {
     display: inline-block;
@@ -48,4 +58,7 @@ h5 {
   float: right;
   padding-right: 10px;
   padding-top: 5px;
+}
+#cool-name {
+  font-family: sans-serif;
 }
