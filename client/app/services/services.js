@@ -131,9 +131,22 @@ angular.module("jamz.services", [])
 
   return {
     signup: signup,
-    singin: signin
+    signin: signin
   }
 })
+
+// .factory('Edit', function ($http) {
+
+//   var editUser = function (data) {
+//     return $http({
+//       method: 'POST', 
+//       url: 'user/:id'
+//       data: {
+//         user: data
+//       }
+//     })
+//   }
+// })
 
 
 

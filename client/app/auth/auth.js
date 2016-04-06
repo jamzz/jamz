@@ -3,8 +3,9 @@ angular.module("jamz.auth", [])
 
   .controller('AuthCtrl', function ($scope, Auth) {
     // $scope.user =  {}
-
+    console.log("OLD MAN LOOK AT MY LIFE")
     $scope.signup = function () {
+        console.log("i've been called")
       Auth.signup()
       .then(function (user) {
         // fill me in
@@ -28,3 +29,4 @@ angular.module("jamz.auth", [])
     }
 
   });
+
