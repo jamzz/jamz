@@ -1,8 +1,15 @@
 <div class="container">
 <h1>login</h1>
-  <form name="signinForm" ng-submit="signin()">
+  <!-- <form name="signinForm" ng-submit="signin()">
     <input type="text" ng-model="user.username">
     <input type="text" ng-model="user.password">
     <button>login</button>
-  </form>
+  </form> -->
+  <div name="signinForm" ng-submit="signin()">
+   <!--  <p id="cool-name">Name: <input type="text" ng-model="user.name"></p> -->
+   <p id="cool-name">Username: <input type="text" ng-model="user.username"></p>
+   <p id="cool-name">Password: <input type="password" ng-model="user.password"><button class="btn">login</button></p>
+    
+    Don't have an account? Click <a ui-sref="signup">Sign Up</a>
+  </div>
 </div>

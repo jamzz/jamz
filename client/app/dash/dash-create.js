@@ -29,8 +29,8 @@ angular.module('jamz.dash-create', [])
           // instrumentsNeeded: instruments,
           area: $scope.city,
           location: $scope.location,
-          date: $scope.date,
-          time: $scope.time
+          date: $scope.date.toDateString(),
+          time: $scope.time.toLocaleString('en-US', {hour12: true})
         };
 
         Dash.createSession(session)
