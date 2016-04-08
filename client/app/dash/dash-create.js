@@ -4,6 +4,31 @@ angular.module('jamz.dash-create', [])
 
     $scope.amount = 0;
 
+    $scope.expOptions = [
+      {
+        name: 'Any',
+        value: 'any'
+      },
+      {
+        name: 'Novice',
+        value: 'novice'
+      },
+      {
+        name: 'Intermediate',
+        value: 'intermediate'
+      },
+      {
+        name: 'Advanced',
+        value: 'advanced'
+      },
+      {
+        name: 'Professional',
+        value: 'professional'
+      }
+    ];
+
+    $scope.experience = $scope.expOptions[0];
+
     $scope.createSession = function() {
       // var check = confirm("Are you sure you want to create this session?");
       var check = true;

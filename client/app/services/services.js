@@ -195,7 +195,6 @@ angular.module("jamz.services", [])
         data: data
       })
       .then(function (resp) {
-        // console.log('search sesh', resp.data);
         return resp.data
       })
       .catch(function (err) {
@@ -204,13 +203,11 @@ angular.module("jamz.services", [])
 
     }
 
-    var searchUsers = function () {
+    var searchUsers = function (data) {
       return $http({
         method: 'GET', 
         url: '/user/search',
-        data: {
-          // fill me in  
-        }
+        data: data
       })
       .then(function (resp) {
         return resp.data
