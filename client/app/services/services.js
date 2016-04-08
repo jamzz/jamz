@@ -67,8 +67,25 @@ angular.module("jamz.services", [])
       })
     }
 
+    var getMySessions = function (data) {
+      return $http({
+        method: 'GET',
+        url: '/sampleSeshData',
+      })
+    }
+
+    var editSession = function (data) {
+      return $http({
+        method: 'PUT',
+        url: '/SampleUpdateSession',
+        data: data
+      })
+    }
+
     return {
-      createSession: createSession
+      createSession: createSession,
+      getMySessions: getMySessions,
+      editSession: editSession
     }
   })
 
