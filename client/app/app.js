@@ -73,11 +73,11 @@ angular.module('jamz', [
         controller: 'SearchCtrl'
       },
       'musicians@search': {
-        templateUrl: 'app/search/search-sessions.html',
+        templateUrl: 'app/search/search-musicians.html',
         controller: 'SearchMusiciansCtrl'
       },
       'sessions@search': {
-        templateUrl: 'app/search/search-musicians.html',
+        templateUrl: 'app/search/search-sessions.html',
         controller: 'SearchSessionsCtrl'
       }
     }

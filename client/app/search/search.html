@@ -2,25 +2,21 @@
   <div class="container">
     <div>
       <button type="button" class="btn btn-default" ng-click="sessionSearchCollapsed = !sessionSearchCollapsed">Search Sessions</button>
-      <div uib-collapse="sessionSearchCollapsed">
-        <p>
-          <div class="well well-lg">
-            <div ui-view="sessions"></div>
-          </div>
-        </p>
+      <div uib-collapse="sessionSearchCollapsed"><br>
+        <div class="well well-lg">
+          <div ui-view="sessions"></div>
+        </div>
       </div>
     </div>
-  </div>
+  </div><br>
 
   <div class="container">
     <div>
       <button type="button" class="btn btn-default" ng-click="musicianSearchCollapsed = !musicianSearchCollapsed">Search Musicians</button>
-      <div uib-collapse="musicianSearchCollapsed">
-        <p>
-          <div class="well well-lg">
-            <div ui-view="musicians"></div>
-          </div>
-        </p>
+      <div uib-collapse="musicianSearchCollapsed"><br>
+        <div class="well well-lg">
+          <div ui-view="musicians"></div>
+        </div>
       </div>
     </div>
   </div>

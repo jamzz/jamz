@@ -188,15 +188,14 @@ angular.module("jamz.services", [])
 
   .factory('Search', function ($http) {
 
-    var searchSessions = function () {
+    var searchSessions = function (data) {
       return $http({
         method: 'GET', 
         url: '/session/search', 
-        data: {
-          // fill me in 
-        }
+        data: data
       })
       .then(function (resp) {
+        // console.log('search sesh', resp.data);
         return resp.data
       })
       .catch(function (err) {
