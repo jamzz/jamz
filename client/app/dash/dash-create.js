@@ -1,6 +1,6 @@
 angular.module('jamz.dash-create', [])
 
-  .controller('CreateCtrl', function($scope, Dash) {
+  .controller('CreateCtrl', function ($scope, Dash) {
 
     $scope.amount = 0;
 
@@ -29,8 +29,8 @@ angular.module('jamz.dash-create', [])
           // instrumentsNeeded: instruments,
           area: $scope.city,
           location: $scope.location,
-          date: $scope.date.toDateString(),
-          time: $scope.time.toLocaleString('en-US', {hour12: true})
+          date: $scope.date.toDateString(), // does this belong here?
+          time: $scope.time.toLocaleString('en-US', {hour12: true}) // does this belong here?
         };
 
         Dash.createSession(session)

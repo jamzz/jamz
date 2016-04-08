@@ -14,5 +14,16 @@ angular.module("jamz.profile", [])
       })
     }
 
+    $scope.editProfile = function () {
+      console.log("you want to edit a profile")
+      Profile.editProfile()
+      .then(function (data) {
+        console.log("tried to edit profile")
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
+    }
+
     $scope.getProfile();
   });

@@ -25,13 +25,18 @@ input {
   background-color:#F8F8F8;
   border-radius: 4.20px;
 }
-.login-box {
+.edit-btn {
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+/*.login-box {
   display: block;
   text-align: center;
   background-color: #F8F8F8;
   max-width: 415px;
   max-height: 350px;
-}
+}*/
 .btn-instruments {
     display: inline-block;
     padding-bottom: 6px;
