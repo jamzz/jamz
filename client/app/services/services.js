@@ -90,7 +90,7 @@ angular.module("jamz.services", [])
   })
 
   .factory('Profile', function ($http) {
-
+    // what is this doing?
     var getUserData = function (user) {
       return user.data;
     }
@@ -111,14 +111,12 @@ angular.module("jamz.services", [])
       })
     }
 
-    var editProfile = function () {
+    var editProfile = function (profile) {
       console.log("gonna edit this fool")
       return $http({
         method: 'PUT',
         url: 'user/:id',
-        data: {
-          editedProfile: data
-        }
+        data: profile
       })
       .then(function (resp) {
         console.log("edited profile: ", resp)
@@ -156,7 +154,7 @@ angular.module("jamz.services", [])
   }
 
   // allow user to sign in
-    var signin = function ($http) {
+    var signin = function (user) {
       console.log("signing in..")
       return $http({
         method: 'POST', 
