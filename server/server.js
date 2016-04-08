@@ -23,32 +23,9 @@ app.use( express.static(path.join(__dirname,'../client')) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
 
-//Auth middleware
-app.use(function(req, res, next) {
-  if( !req.cookies ) {
-    throw new Error("Cookes aren't parsed");
-  }
-
-  db('users').where({sessionId: req.cookies.sessionId}).select("username")
-  .then(function(row){
-    console.log("data retrieved", row[0])
-    if(row[0].username === null || row[0].username === undefined)
-      req.loggedIn = false;
-
-    else
-      req.loggedIn = true;
-
-    next();
-  })
-  .catch(function(err){
-    if(err instanceof Error) throw err;
-    console.log("in strict auth middleware", err);
-  })
-})
-
 //Routers
-app.use('/user', userModel);
-app.use('/session', jamSessionModel);
+app.use('/user', isLoggedIn, userModel);
+app.use('/session', isLoggedIn, jamSessionModel);
 app.use('/auth', authModel);
 
 //Serve test data
@@ -64,6 +41,28 @@ app.listen(process.env.PORT, function(){
   console.log('POST /session/create  /auth/login  /auth/logout  /auth/signup');
 });
 
+
+function isLoggedIn(req, res, next) {
+  if( !req.cookies ) {
+    throw new Error("Cookes aren't parsed");
+  }
+
+  db('users').where({sessionId: req.cookies.sessionId}).select("username")
+  .then(function(row){
+    console.log("data retrieved", row[0])
+    if(row[0] === null || row[0] === undefined)
+      req.loggedIn = false;
+
+    else
+      req.loggedIn = true;
+
+    next();
+  })
+  .catch(function(err){
+    if(err instanceof Error) throw err;
+    console.log("in strict auth middleware", err);
+  })
+}
 
 
 function configTestData() {

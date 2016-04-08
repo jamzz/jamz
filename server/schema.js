@@ -44,7 +44,7 @@ knex.schema.createTableIfNotExists('users', function(table) {
   table.string('owner'); //id vs username vs name
   table.timestamps();
 })
-.createTableIfNotExists('session_user', function(table) {
+.createTableIfNotExists('session_users', function(table) {
   table.increments('id').primary();
   table.integer('session_id').references('id').inTable('session');
   table.integer('user_id').references('id').inTable('users');
