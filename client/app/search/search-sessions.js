@@ -1,11 +1,8 @@
 angular.module('jamz.search-sessions', [])
 
   .controller('SearchSessionsCtrl', function ($scope, Search) {
-    console.log("Boogie Time!!")
     
     $scope.searchSessions = function () {
-      // console.log("Far OUT")
-      // console.log("I think I'm working")
       $scope.answer = true;
       var check = true;
 

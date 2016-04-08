@@ -99,7 +99,7 @@ module.exports = function(express) {
 
 
   // user/search
-  req.route('/search')
+  router.route('/search')
     .get(function(req, res){
       //get users
       var users = "put actual users here";
@@ -113,7 +113,7 @@ module.exports = function(express) {
     })
 
 
-  filterUsers(query, users){
+  function filterUsers(query, users){
     var currentList = users.slice();
 
     if(isValid(query.username))
@@ -140,21 +140,21 @@ module.exports = function(express) {
   }
 
   function byExactMatch(queryVal, curPath, cur) {
-    return cur.[curPath] === queryVal
+    return cur[curPath] === queryVal
   }
 
   function byArrayContainsMatch(queryVal, curPath, cur) {
-    return cur.[curPath].indexOf(queryVal) !== -1
+    return cur[curPath].indexOf(queryVal) !== -1
   }
 
   function byPaid(queryVal, curPath, cur) {
-    return (cur.[curPath] > 0 && queryVal) || (cur.[curPath] === 0 && queryVal)
+    return (cur[curPath] > 0 && queryVal) || (cur[curPath] === 0 && queryVal)
       ? true
       : false;
   }
 
   function valid(val){
-    return val !== undefined && !== ""
+    return val !== undefined && val !== ""
       ? true
       : false
   }

@@ -59,11 +59,11 @@ angular.module("jamz.services", [])
           newSession: data
         }
       })
-      .then(function (data){
-        console.log("data returned from createSession:", data);
+      .then(function (resp) {
+        return resp.data
       })
-      .catch(function (err){
-        console.log("err", err);
+      .catch(function (err) {
+        console.error(err)
       })
     }
 
@@ -72,6 +72,12 @@ angular.module("jamz.services", [])
         method: 'GET',
         url: '/sampleSeshData',
       })
+      .then(function (resp) {
+        return resp.data
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
     }
 
     var editSession = function (data) {
@@ -79,6 +85,12 @@ angular.module("jamz.services", [])
         method: 'PUT',
         url: '/SampleUpdateSession',
         data: data
+      })
+      .then(function (resp) {
+        return resp.data
+      })
+      .catch(function (err) {
+        console.error(err)
       })
     }
 
@@ -176,38 +188,39 @@ angular.module("jamz.services", [])
 
   .factory('Search', function ($http) {
 
-  var searchSessions = function () {
-    return $http({
-      method: 'GET', 
-      url: '/session/search', 
-      data: {
-        // fill me in 
-      }
-    })
-    .then(function (resp) {
-      return resp.data
-    })
-    .catch(function (err) {
-      console.error(err)
-    })
+    var searchSessions = function () {
+      return $http({
+        method: 'GET', 
+        url: '/session/search', 
+        data: {
+          // fill me in 
+        }
+      })
+      .then(function (resp) {
+        return resp.data
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
 
-  }
+    }
 
-  var searchUsers = function () {
-    return $http({
-      method: 'GET', 
-      url: '/user/search',
-      data: {
-        // fill me in  
-      }
-    })
-    .then(function (resp) {
-      return resp.data
-    })
-    .catch(function (err) {
-      console.error(err)
-    })
-  }
+    var searchUsers = function () {
+      return $http({
+        method: 'GET', 
+        url: '/user/search',
+        data: {
+          // fill me in  
+        }
+      })
+      .then(function (resp) {
+        return resp.data
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
+    }
+
     return {
       searchSessions: searchSessions,
       searchUsers: searchUsers
