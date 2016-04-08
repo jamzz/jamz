@@ -2,16 +2,12 @@
 angular.module("jamz.auth", [])
 
   .controller('AuthCtrl', function ($scope, $location, Auth) {
-     $scope.user =  {}
-    console.log("OLD MAN, I'M BEING STAGED")
+    $scope.user =  {}
     $scope.signup = function () {
-    console.log("i've been called")
       Auth.signup($scope.user)
       .then(function (user) {
-        // fill me in
-        // $scope.user = user
-        console.log("current user", user)
-        $location.path('/home')
+        $location.path('/home');
+        return user;
       })
       .catch(function (err) {
         console.error(err)
@@ -21,9 +17,8 @@ angular.module("jamz.auth", [])
     $scope.signin = function () {
       Auth.signin($scope.user)
       .then(function (user) {
-        console.log("let's do this")
-        $location.path('/home')
-        // fill me in
+        $location.path('/home');
+        return user;
       })
       .catch(function (err) {
         console.error(err)

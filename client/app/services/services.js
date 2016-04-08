@@ -18,8 +18,16 @@ angular.module("jamz.services", [])
       })
     };
 
+    var logout = function(){
+      return $http({
+        method: 'POST',
+        url: '/auth/logout'
+      })
+    }
+
     return {
-      getSessions: getSessions
+      getSessions: getSessions,
+      logout: logout
     }
   })
 
@@ -200,7 +208,6 @@ angular.module("jamz.services", [])
       .catch(function (err) {
         console.error(err)
       })
-
     }
 
     var searchUsers = function (data) {
