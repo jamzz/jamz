@@ -10,6 +10,7 @@ var authModel = require('./models/auth')(express);
 var userModel = require('./models/user')(express);
 var jamSessionModel = require('./models/jamSession')(express);
 var configEnvironment = require('./config/environment');
+var db = require('./db');
 
 //Production compatibility
 configEnvironment();
