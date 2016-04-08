@@ -27,8 +27,8 @@ input {
 }
 .edit-btn {
   float: right;
-  margin-right: 10px;
-  margin-top: 10px;
+  margin-right: 5px;
+  margin-top: 5px;
 }
 /*.login-box {
   display: block;
@@ -64,6 +64,7 @@ input {
   padding-right: 10px;
   padding-top: 5px;
 }
+
 #cool-name {
   font-family: sans-serif;
 }

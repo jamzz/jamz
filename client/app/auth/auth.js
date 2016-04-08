@@ -1,7 +1,7 @@
 
 angular.module("jamz.auth", [])
 
-  .controller('AuthCtrl', function ($scope, $window, $location, Auth) {
+  .controller('AuthCtrl', function ($scope, $location, Auth) {
      $scope.user =  {}
     console.log("OLD MAN, I'M BEING STAGED")
     $scope.signup = function () {
@@ -10,7 +10,6 @@ angular.module("jamz.auth", [])
       .then(function (user) {
         // fill me in
         // $scope.user = user
-        $window.localStorage.setItem('jamz/session', token)
         console.log("current user", user)
         $location.path('/home')
       })
@@ -22,7 +21,6 @@ angular.module("jamz.auth", [])
     $scope.signin = function () {
       Auth.signin($scope.user)
       .then(function (user) {
-        $window.localStorage.setItem('jamz/session', token)
         console.log("let's do this")
         $location.path('/home')
         // fill me in

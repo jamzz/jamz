@@ -67,7 +67,7 @@ angular.module('jamz', [
     url: '/search', 
     views: {
       '': {
-        templateUrl: '../index.html',
+        templateUrl: 'app/search/search.html',
         controller: 'SearchCtrl'
       },
       'search@search': {
