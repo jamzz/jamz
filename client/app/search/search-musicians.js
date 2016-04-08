@@ -1,6 +1,6 @@
-angular.module('jamz.show-search', [])
+angular.module('jamz.search-musicians', [])
 
-  .controller('ShowSearchCtrl', function ($scope, Search) {
+  .controller('SearchMusiciansCtrl', function ($scope, Search) {
     console.log("Boogie Time!!")
     
     $scope.searchSessions = function () {
@@ -37,5 +37,3 @@ angular.module('jamz.show-search', [])
     }
 
   });
-
-

@@ -7,7 +7,9 @@ angular.module('jamz', [
   'jamz.dash',
   'jamz.dash-create',
   'jamz.search', 
-  'jamz.show-search',
+  'jamz.search',
+  'jamz.search-musicians',
+  'jamz.search-sessions',
   'ngAnimate',
   'ui.bootstrap',
   'ui.router'
@@ -70,9 +72,13 @@ angular.module('jamz', [
         templateUrl: 'app/search/search.html',
         controller: 'SearchCtrl'
       },
-      'search@search': {
-        templateUrl: 'app/search/show-search.html',
-        controller: 'ShowSearchCtrl'
+      'musicians@search': {
+        templateUrl: 'app/search/search-sessions.html',
+        controller: 'SearchMusiciansCtrl'
+      },
+      'sessions@search': {
+        templateUrl: 'app/search/search-musicians.html',
+        controller: 'SearchSessionsCtrl'
       }
     }
   })

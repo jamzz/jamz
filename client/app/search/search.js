@@ -1,5 +1,6 @@
 angular.module('jamz.search', [])
 
   .controller('SearchCtrl', function ($scope, Search) {
-    $scope.searchCollapsed = true;
+    $scope.musicianSearchCollapsed = true;
+    $scope.sessionSearchCollapsed  = true;
   });
