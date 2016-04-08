@@ -98,12 +98,66 @@ module.exports = function(express) {
     });
 
 
+  // user/search
+  req.route('/search')
+    .get(function(req, res){
+      //get users
+      var users = "put actual users here";
+      if(typeof users === "string") throw new Error("I wanted an object, thx.")
+      if(!req.query) throw new Error("didn't get a query")
+
+      return paginate(filterUsers(req.query, users), req.query.page);
+    })
+    .all(function(req, res){
+      res.status(404).send("Try get method");
+    })
 
 
+  filterUsers(query, users){
+    var currentList = users.slice();
 
+    if(isValid(query.username))
+      currentList = currentList.filter(byExactMatch.bind(null, query.username, "username"))
 
+    if(isValid(query.name))
+      currentList = currentList.filter(byExactMatch.bind(null, query.name, "name"))
 
+    if(isValid(query.bands))
+      currentList = currentList.filter(byArrayContainsMatch.bind(null, query.bands, "bands"))
 
+    if(isValid(query.instruments))
+      currentList = currentList.filter(byArrayContainsMatch.bind(null, query.instruments, "instruments"))
+
+    return currentList
+  }
+
+  function paginate(arr, page){
+  // recursive thingy
+  //  if(page * 20 > arr.length)
+  //    return paginate(arr, page-1);
+
+    return arr.slice( (page*20)-1, (page*20)+19 );
+  }
+
+  function byExactMatch(queryVal, curPath, cur) {
+    return cur.[curPath] === queryVal
+  }
+
+  function byArrayContainsMatch(queryVal, curPath, cur) {
+    return cur.[curPath].indexOf(queryVal) !== -1
+  }
+
+  function byPaid(queryVal, curPath, cur) {
+    return (cur.[curPath] > 0 && queryVal) || (cur.[curPath] === 0 && queryVal)
+      ? true
+      : false;
+  }
+
+  function valid(val){
+    return val !== undefined && !== ""
+      ? true
+      : false
+  }
 
 
 /*

@@ -1,15 +1,16 @@
 //Packages
-var express = require('express');
-var session = require('express-session');
 var path = require('path');
 var uuid = require('uuid');
+var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 
 //Local
 var authModel = require('./models/auth')(express);
 var userModel = require('./models/user')(express);
 var jamSessionModel = require('./models/jamSession')(express);
 var configEnvironment = require('./config/environment');
+var db = require('./db');
 
 //Production compatibility
 configEnvironment();
@@ -17,19 +18,33 @@ configEnvironment();
 var app = express();
 
 //Standard Middleware
+app.use(cookieParser());
 app.use( express.static(path.join(__dirname,'../client')) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
-app.use(session(
-  {
-    genid: uuid.v4,
-    secret: 'sosecretyoudneverguessitlikeforreal',
-    resave: true,
-    saveUninitialized: true
+
+//Auth middleware
+app.use(function(req, res, next) {
+  if( !req.cookies ) {
+    throw new Error("Cookes aren't parsed");
   }
-))
 
+  db('users').where({sessionId: req.cookies.sessionId}).select("username")
+  .then(function(row){
+    console.log("data retrieved", row[0])
+    if(row[0].username === null || row[0].username === undefined)
+      req.loggedIn = false;
 
+    else
+      req.loggedIn = true;
+
+    next();
+  })
+  .catch(function(err){
+    if(err instanceof Error) throw err;
+    console.log("in strict auth middleware", err);
+  })
+})
 
 //Routers
 app.use('/user', userModel);

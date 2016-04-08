@@ -235,6 +235,75 @@ module.exports = function(express) {
     return false;
   }
 
+
+  // session/search
+  req.route('/search')
+    .get(function(req, res){
+      //get sessions
+      var sessions = "put actual sessions here";
+      if(typeof sessions === "string") throw new Error("I wanted an object, thx.")
+      if(!req.query) throw new Error("didn't get a query")
+
+      return paginate(filterSessions(req.query, sessions), req.query.page);
+    })
+    .all(function(req, res){
+      res.status(404).send("Try get method");
+    })
+
+
+  filterSessions(query, sessions){
+    var currentList = sessions.slice();
+
+    if(isValid(query.neededInstruments))
+      currentList = currentList.filter(byArrayContainsMatch.bind(null, query.neededInstruments, "neededInstruments"))
+
+    if(isValid(query.genre))
+      currentList = currentList.filter(byExactMatch.bind(null, query.genre, "genre"))
+
+    if(isValid(query.paidAmount))
+      currentList = currentList.filter(byPaid.bind(null, query.paidAmount, "paidAmount"));
+
+    if(isValid(query.title))
+      currentList = currentList.filter(byExactMatch.bind(null, query.title, "title"))
+
+    if(isValid(query.area))
+      currentList = currentList.filter(byExactMatch.bind(null, query.area, "area"))
+
+    if(isValid(query.musician))
+      currentList = currentList.filter(byArrayContainsMatch.bind(null, query.musician, "musician"))
+
+    return currentList
+  }
+
+  function paginate(arr, page){
+  // recursive thingy
+  //  if(page * 20 > arr.length)
+  //    return paginate(arr, page-1);
+
+    return arr.slice( (page*20)-1, (page*20)+19 );
+  }
+
+  function byExactMatch(queryVal, curPath, cur) {
+    return cur.[curPath] === queryVal
+  }
+
+  function byArrayContainsMatch(queryVal, curPath, cur) {
+    return cur.[curPath].indexOf(queryVal) !== -1
+  }
+
+  function byPaid(queryVal, curPath, cur) {
+    return (cur.[curPath] > 0 && queryVal) || (cur.[curPath] === 0 && queryVal)
+      ? true
+      : false;
+  }
+
+  function valid(val){
+    return val !== undefined && !== ""
+      ? true
+      : false
+  }
+
+
   return router;
 }
 

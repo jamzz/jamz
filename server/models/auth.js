@@ -1,6 +1,7 @@
 //This function is invoked immediately and gets express passed in from server.js
 var bcrypt      = require('bcryptjs')
 var Promise     = require('bluebird');
+var uuid        = require('uuid');
 
 var db = require('../db');
 
@@ -29,11 +30,13 @@ module.exports = function(express) {
       })
       .then(function(result){
         if(result) {
-          // res.cookies
+          var sessionId = uuid.v4();
+          db('users').where({username: username}).update({sessionId: sessionId});
+          res.cookie('sessionId', sessionId)
           res.status(200).send();
         }
 
-        res.status(400).send();
+        res.status(400).send("comparison failed");
       })
       .catch(function(err){
         console.log("login had problems", err);
@@ -44,17 +47,16 @@ module.exports = function(express) {
       res.status(404).send("Try using the POST method.")
     })
 
-  // router.route('/logout')
-  //   .post(function(req, res) {
-  //     if(! req || !req.body || !req.body.username || !req.body.password) {
-  //       res.status(400).send("/auth/logout expected a body with a newUser key");
-  //     }
-
-  //     res.status(201).send("You found the endpoint for creating a user");
-  //   })
-  //   .all(function(req, res){
-  //     res.status(404).send("Try using the POST method.")
-  //   })
+  router.route('/logout')
+    .post(function(req, res) {
+      res.clearCookie('sessionId');
+      res.clearCookie('loggedIn');
+      db('users').where({username: username}).update({sessionId: "null"});
+      res.status(200).send("Logged out");
+    })
+    .all(function(req, res){
+      res.status(404).send("Try using the POST method.")
+    })
 
   router.route('/signup')
     .post(function(req, res){
@@ -74,7 +76,12 @@ module.exports = function(express) {
         return hash( password, null, null )
       })
       .then(function(result){
-        //put password in database
+        password = result;
+        var sessionId = uuid.v4();
+
+        res.cookie('sessionId', sessionId)
+        db('users').insert({username: username, password: password, sessionId: sessionId});
+
         res.status(201).send();
       })
       .catch(function(err){
@@ -87,4 +94,3 @@ module.exports = function(express) {
 
   return router;
 }
-
