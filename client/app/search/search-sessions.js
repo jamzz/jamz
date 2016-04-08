@@ -2,25 +2,37 @@ angular.module('jamz.search-sessions', [])
 
   .controller('SearchSessionsCtrl', function ($scope, Search) {
     
+    $scope.paid = false;
     $scope.searchSessions = function () {
-      $scope.answer = true;
-      var check = true;
 
-      if (check) {
-        var genres = $scope.genres
+      var genres = undefined;
+      if ($scope.genres) {
+        genres = $scope.genres
           .split(',')
           .map(function(val) { return val.trim(); })
           .filter(function(val) {return val !== '' })
+      }
 
-        var instruments = $scope.instruments
+      var instruments = undefined;
+      if ($scope.instruments) {
+        instruments = $scope.instruments
           .split(',')
           .map(function(val) { return val.trim() })
           .filter(function(val) { return val !== '' })
       }
 
-        var session = {
+      var session = {
+        title: $scope.title,
+        genre: genres,
+        paidAmount: $scope.paid, // new field
+        // experience: $scope.experience,
+        neededInstruments: instruments,
+        area: $scope.city,
+        page: 1
+      };
 
-        }
+      console.log("session to search", session);
+
       Search.searchSessions(session)
       .then(function (data) {
         return data;
@@ -28,9 +40,7 @@ angular.module('jamz.search-sessions', [])
     }
 
     $scope.searchUsers = function () {
-      console.log("Like, whoa...man")
       Search.searchUsers(user)
-      console.log("OKAY, I guess I'm working")
     }
 
   });

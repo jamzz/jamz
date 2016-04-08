@@ -18,20 +18,22 @@ angular.module('jamz.dash-create', [])
           .map(function(val){ return val.trim(); })
           .filter(function(val){ return val !== '' });
 
-          // not handling arrays
+        // not handling arrays yet
         var session = {
           sessionId: 1,
           title: $scope.title,
           description: $scope.description,
-          // genres: genres,
+          genres: genres,
           paidAmount: $scope.amount,
           experience: $scope.experience,
-          // instrumentsNeeded: instruments,
+          instrumentsNeeded: instruments,
           area: $scope.city,
           location: $scope.location,
           date: $scope.date.toDateString(), // does this belong here?
           time: $scope.time.toLocaleString('en-US', {hour12: true}) // does this belong here?
         };
+
+        console.log("session created:", session);
 
         Dash.createSession(session)
         .then(function(data){

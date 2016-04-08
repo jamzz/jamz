@@ -6,7 +6,7 @@ angular.module('jamz.search-musicians', [])
     $scope.searchSessions = function () {
       // console.log("Far OUT")
       // console.log("I think I'm working")
-      $scope.answer = true;
+      $scope.paid = true;
       var check = true;
 
       if (check) {
