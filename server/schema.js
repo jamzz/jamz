@@ -4,7 +4,8 @@ knex.schema.createTableIfNotExists('users', function(table) {
   table.increments('id').primary();
   table.integer('userId');
   table.string('username');
-  table.string('password')
+  table.string('password');
+  table.string('sessionId');
   table.string('name');
   table.string('description');
   table.string('picture');
