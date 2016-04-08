@@ -1,0 +1,64 @@
+h5 {
+  font-size: 5px;
+}
+input {
+  border-radius: 4.20px;
+}
+.sessions {
+  margin: 10px;
+  text-align: center;
+  padding: 5px;
+  background-color:#F8F8F8;
+  border-radius: 4.20px;
+}
+.users{
+  margin: 10px;
+/*  text-align: center;*/
+  padding: 5px;
+  background-color:#F8F8F8;
+  border-radius: 4.20px;
+}
+.profile {
+  margin: 10px;
+/*  text-align: center;*/
+  padding: 5px;
+  background-color:#F8F8F8;
+  border-radius: 4.20px;
+}
+.login-box {
+  display: block;
+  text-align: center;
+  background-color: #F8F8F8;
+  max-width: 415px;
+  max-height: 350px;
+}
+.btn-instruments {
+    display: inline-block;
+    padding-bottom: 6px;
+    margin-bottom: 0;
+    margin-right: 3px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: rgba(166, 189, 46, 0.11);
+    height: 30px;
+}
+
+.glyphicon.glyphicon-fire {
+  font-size: 12px;
+}
+.glyphicon.glyphicon-bell {
+  float: right;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+#cool-name {
+  font-family: sans-serif;
+}

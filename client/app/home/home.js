@@ -1,8 +1,7 @@
 angular.module('jamz.home', [])
 
   .controller('MainCtrl', function ($scope, Sessions) {
-    // $scope.session = "HII!!"
-    // $scope.sessionTwo = "Hello!!"
+
 
     $scope.getSessions = function(){
       Sessions.getSessions()

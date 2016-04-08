@@ -1,5 +1,12 @@
 module.exports = function(grunt) {
- // require('load-grunt-tasks')(grunt);
+  /* Instructions:
+  Run 'grunt' in a terminal tab
+  Run 'grunt' launch in a second tab
+
+
+  DISCLAIMER: This grunt file will deal with initial setup of the database.
+    In order for it to work after the database exists, you must delete the whole thing.
+  */
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -28,11 +35,17 @@ module.exports = function(grunt) {
       run_db: {
         cmd: 'postgres -D dev_db/'
       },
+      drop_db: {
+        cmd: 'dropdb dev_db/'
+      },
       config_db: {
-        cmd: 'createdb dev_db/'
+        cmd: 'createdb dev_db'
       },
       init_schemas: {
         cmd: 'node server/schema.js'
+      },
+      seed_db: {
+        cmd: 'node server/seeds/seeder.js'
       },
       launch_app: {
         cmd: 'npm start'
@@ -56,6 +69,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-fixmyjs');
 
-  grunt.registerTask('default', ['jshint', 'watch', 'exec:init_db', 'exec:run_db']);
-  grunt.registerTask('launch', ['exec:config_db', 'exec:init_schemas', 'exec:launch_app']);
+  grunt.registerTask('default',  ['exec:init_db', 'exec:run_db']);
+  grunt.registerTask('launch',   ['jshint', 'exec:config_db', 'exec:init_schemas', 'exec:seed_db', 'exec:launch_app']);
 };

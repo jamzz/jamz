@@ -4,52 +4,52 @@
   <meta charset="utf-8">
   <title>Jamz</title>
 
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" type="text/css" href="./lib/bootstrap/dist/css/bootstrap.css">
 
 </head>
 
 <body>
-
-
   <nav class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" ui-sref="home">Jamz</a>
+      <a class="navbar-brand" ui-sref="home">JAMZ</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a class='btn' ui-sref="home">HOME</a></li>
-      <li><a class='btn' ui-sref="profile">PROFILE</a></li>
-      <!-- <li data-match-route="/#/home"><a href="/#/home">Home</a></li>
-      <li data-match-route="/#/profile"><a href="/#/profile">Profile</a></li>
-      <li data-match-route="/#/users"><a href="/#/users">Users</a></li>
-      <li data-match-route="/#/signin"><a href="/#/signin">Login</a></li>
-      <li data-match-route="/#/logout"><a href="/#/logout">Logout</a></li> -->
+      <li><a class="btn" ui-sref="home">HOME</a></li>
+      <li><a class="btn" ui-sref="users">MUSICIANS</a></li>
+      <li><a class="btn" ui-sref="dashboard">DASHBOARD</a></li>
+      <li><a class="btn" ui-sref="profile">PROFILE</a></li>
+      <li><a class="btn" ui-sref="signin">LOGIN</a></li>
+      <li><a class="btn" ui-sref="search"><span class="glyphicon glyphicon-search"></span></a></li>
+
     </ul>
+    <a><span class="glyphicon glyphicon-bell"></span></a>
   </nav>
 
   <div class="container">
     <div ui-view></div>
   </div>
+</body>
 
-
-
+<footer>
   <script src="./lib/angular/angular.js"></script>
   <script src="./lib/angular-animate/angular-animate.js"></script>
-  <script src="./lib/angular-cookies/angular-cookies.js"></script>
-  <script src="./lib/angular-mocks/angular-mocks.js"></script>
-  <script src="./lib/angular-resource/angular-resource.js"></script>
-  <script src="./lib/angular-sanitize/angular-sanitize.js"></script>
+  <script src="./lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <!-- <script src="./lib/angular-cookies/angular-cookies.js"></script> -->
+  <!-- <script src="./lib/angular-mocks/angular-mocks.js"></script> -->
+  <!-- <script src="./lib/angular-resource/angular-resource.js"></script> -->
+  <!-- <script src="./lib/angular-sanitize/angular-sanitize.js"></script> -->
   <script src="./lib/angular-touch/angular-touch.js"></script>
   <script src="./lib/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="./lib/ui-bootstrap/ui-bootstrap-tpls-1.2.5.min.js"></script>
 
   <script src="app/app.js"></script>
   <script src="app/home/home.js"></script>
   <script src="app/profile/profile.js"></script>
   <script src="app/users/users.js"></script>
-
+  <script src="app/dash/dash.js"></script>
+  <script src="app/dash/dash-create.js"></script>
   <script src="app/auth/auth.js"></script>
   <script src="app/services/services.js"></script>
 
-</body>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="./lib/bootstrap-css-only/css/bootstrap.css">
+</footer>
 </html>
