@@ -14,13 +14,25 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a class="btn" ui-sref="home">HOME</a></li>
-      <li><a class="btn" ui-sref="users">USERS</a></li>
+      <li><a class="btn" ui-sref="users">MUSICIANS</a></li>
       <li><a class="btn" ui-sref="dashboard">DASHBOARD</a></li>
       <li><a class="btn" ui-sref="profile">PROFILE</a></li>
+      <li><a class="btn" ui-sref="signin">LOGIN</a></li>
+      <li><a type="button" class="btn" ng-click="searchCollapsed = !searchCollapsed"><span class="glyphicon glyphicon-search"></span></a></li>
 
     </ul>
     <a><span class="glyphicon glyphicon-bell"></span></a>
   </nav>
+ 
+  <div class="container">
+    <div uib-collapse="searchCollapsed">
+      <p>
+        <div class="well well-lg">
+          <div ui-view="show-search"></div>
+        </div>
+      </p>
+    </div>
+  </div>
 
   <div class="container">
     <div ui-view></div>
@@ -44,6 +56,8 @@
   <script src="app/users/users.js"></script>
   <script src="app/dash/dash.js"></script>
   <script src="app/dash/dash-create.js"></script>
+  <script src="app/search/search.js"></script>
+  <script src="app/search/show-search.js"></script>
   <script src="app/auth/auth.js"></script>
   <script src="app/services/services.js"></script>
 

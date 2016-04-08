@@ -1,6 +1,6 @@
-'use strict';
+
 
 angular.module('jamz')
-  .controller('navCtrl', ['$scope', function($scope){
+  .controller('navCtrl', function ($scope){
     console.log("Hello world.")
-  }])
+  })
