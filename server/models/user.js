@@ -1,6 +1,6 @@
 //This function is invoked immediately and gets express passed in from server.js
 var knex = require('../db')
-
+var request = require('request');
 module.exports = function(express) {
 
   var router = express.Router();
@@ -8,6 +8,11 @@ module.exports = function(express) {
   // requests for users data
   router.route('/')
     .get(function(req, res){
+
+      console.log("req.loggedIn", req.loggedIn);
+
+
+
       console.log('---received users GET, query='+JSON.stringify(req.query));
       var rq = req.query;
       if (rq && rq.id) {
@@ -101,12 +106,19 @@ module.exports = function(express) {
   // user/search
   router.route('/search')
     .get(function(req, res){
-      //get users
-      var users = "put actual users here";
-      if(typeof users === "string") throw new Error("I wanted an object, thx.")
-      if(!req.query) throw new Error("didn't get a query")
 
-      return paginate(filterUsers(req.query, users), req.query.page);
+      console.log("----------------req.query------------", req.query);
+
+      request('http://localhost:1337/user', function(err, response, body) {
+        if(err) console.log(err);
+        var users = JSON.parse(body);
+        console.log(typeof users);
+
+        if(typeof users === "string") throw new Error("I wanted an object, thx.")
+        if(!req.query) throw new Error("didn't get a query")
+
+        res.status(200).send(paginate(filterUsers(req.query, users), req.query.page));
+      })
     })
     .all(function(req, res){
       res.status(404).send("Try get method");
@@ -136,6 +148,13 @@ module.exports = function(express) {
   //  if(page * 20 > arr.length)
   //    return paginate(arr, page-1);
 
+    console.log("prepaginated arr", arr);
+
+    page = page || 1;
+
+    if(arr.length<20)
+      return arr;
+
     return arr.slice( (page*20)-1, (page*20)+19 );
   }
 
@@ -153,7 +172,7 @@ module.exports = function(express) {
       : false;
   }
 
-  function valid(val){
+  function isValid(val){
     return val !== undefined && val !== ""
       ? true
       : false
