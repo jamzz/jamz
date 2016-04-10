@@ -1,6 +1,8 @@
 //This function is invoked immediately and gets express passed in from server.js
 var knex = require('../db')
 var request = require('request');
+var async = require('async');
+
 module.exports = function(express) {
 
   var router = express.Router();
@@ -10,20 +12,18 @@ module.exports = function(express) {
     .get(function(req, res){
 
       console.log("req.loggedIn", req.loggedIn);
-
-
-
       console.log('---received users GET, query='+JSON.stringify(req.query));
       var rq = req.query;
       if (rq && rq.id) {
         // handle request for individual user--------------
         console.log("user request for individual user id ",rq.id);
-        knex('users').where({
-          id: rq.id
-        }).select('*')
+        //knex('users').where({
+        //  id: rq.id
+        //}).select('*')
+        getUserById(rq.id)
         .then(function(data){
-          console.log("user:request for user id "+rq.id+" successful. Returning: "+data[0]);
-          res.status(200).send(data[0]);
+          console.log("user:request for user id "+rq.id+" successful. Returning: "+data);
+          res.status(200).send(JSON.stringify(data));
         })
         .catch(function(error){
           console.log("user:request for user id "+rq.id+" failed. Error: "+error);
@@ -101,6 +101,102 @@ module.exports = function(express) {
         }
       }
     });
+
+  function getUserById(uId){
+    return new Promise(function(resolve,reject){
+      // handle request for individual user-------------------
+      async.parallel({
+        queryone: function( parCb ){
+          console.log("getting instruments");
+          var query = knex('instrument').select('instrument').where({
+            user_id: uId
+          });
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+        querytwo: function( parCb ){
+          console.log("getting bands");
+          var query = knex('band').select('band').where({
+            user_id: uId
+          });
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+        /*
+        querythree: function( parCb ){
+          console.log("getting friends");
+          var query = knex('user_friend')
+            .join('users', 'user_friends.user_id', '=', 'users.id')
+            .join('users', 'user_friends.user_id', '=', 'users.id')
+          .where({
+            user_id : uId
+          })
+          .select('username');
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+        */
+        queryfour: function( parCb ){
+          console.log("getting session data");
+          var query = knex('session_users')
+            .join('session', 'session_users.session_id', '=', 'session.id')
+            .join('users', 'session_users.user_id', '=', 'users.id')
+          .where({
+            session_id : uId
+          })
+          .select('title','date','location');
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+        queryfive: function( parCb ){
+          console.log("getting user data");
+          var query = knex('users').select('*').where({
+                id: uId
+              });
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+      },
+      function(err, results) {
+        if (err){
+          console.log("Error getting user data, id="+uId+", err:",err);
+          reject(err);
+        } else {
+          console.log("putting it all together");
+          var usr = {};
+          var instruments = [];
+          var bands = [];
+          var friends = [];
+          var sessions = [];
+          for (var i=0;i<results.queryone.length;i++){
+            instruments.push(results.queryone[i].instrument)
+          }
+          for (var j=0;j<results.querytwo.length;j++){
+            bands.push(results.querytwo[j].band);
+          }
+          //for (var k=0;k<results.querythree.length;k++){
+          //  friends.push(results.querythree[k].username)
+          //}
+          usr = results.queryfive[0];
+          usr['instruments'] = instruments;
+          usr['bands'] = bands;
+          //usr['friends'] = friends;
+          usr['sessions'] = results.queryfour;
+          console.log("user:request for user by id "+uId+" successful. Returning: "+JSON.stringify(usr));
+          resolve(usr);
+        } 
+      })
+    });
+  }
+
+
+
+
 
 
   // user/search

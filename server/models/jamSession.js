@@ -16,7 +16,7 @@ module.exports = function(express) {
         // handle request for individual session-------------------
         getSessionById(rq.id)
         .then(function(data){
-          console.log("returning session id data");
+          console.log("returning session id data", data);
           res.status(200).send(JSON.stringify(data));
         })
         .catch(function(err){
@@ -26,31 +26,25 @@ module.exports = function(express) {
       } else if (rq && rq.name) {
         // handle request to get list of sessions by username-------
         console.log("requested username = "+rq.name);
-        rq.name="jack";
-        knex('session_users')
-        .join('session', 'session_users.session_id', '=', 'session.id')
-        .join('users', 'session_users.user_id', '=', 'users.id')
-        .where({
-          username: rq.name
-        }).select('*')
+        getSessionsByName(rq.name)
         .then(function(data){
-          console.log("jamSession:request for sessions by username "+rq.name+" successful. Returning: "+data[0]);
-          res.status(200).send(data[0]);
+          console.log("jamSession:request for sessions by username "+rq.name+" successful. Returning: "+JSON.stringify(data));
+          res.status(200).send(JSON.stringify(data));
         })
         .catch(function(error){
           console.log("jamSession:request for sessions by username "+rq.name+" failed. Error: "+error);
           res.status(400).send("Could not find requested sessions by name ("+rq.name+")");
         })
       } else {
-        // show all sessions-------------------------------
-        knex.select().table('session')
+        // default to show all sessions-------------------------------
+        getAllSessions()
         .then(function(data){
-          console.log("jamSession:/: returning:", data);
-          res.status(200).send(data);
+          console.log("jamSession:/: returning:", JSON.stringify(data));
+          res.status(200).send(JSON.stringify(data));
         })
         .catch(function(err){
           console.log("Error retrieving session list: ", err);
-          res.status(401).send(data);
+          res.status(401).send("Could retrieve sessions, error:",err);
         })
       }
     })
@@ -163,7 +157,7 @@ module.exports = function(express) {
   router.route('/update') 
     .post(function(req, res) {
       console.log('received update session POST');
-      if(! req || !req.body || !req.body.updateSession) {
+      if(!req || !req.body || !req.body.updateSession) {
         res.status(400).send("/session/update expected a body with a newSession object");
       } else {
        // sanity check input
@@ -235,6 +229,54 @@ module.exports = function(express) {
     return false;
   }
 
+  function getAllSessions(){
+    return new Promise(function(resolve,reject){
+      var output = [];
+      knex.select('id').table('session')
+      .then(function(ids){
+        return ids.reduce(function(promise, item) {
+          return promise.then(function() {
+              return getSessionById(item.id)
+                .then(function(res) {
+                  output.push(res);
+              });
+          });
+        }, Promise.resolve());
+      })
+      .then(function(data){
+        //console.log("output=",output);
+        resolve(output);
+      })
+    });
+  }
+
+  function getSessionsByName(sName) {
+    return new Promise(function(resolve,reject){
+      var output = [];
+      knex('session_users')
+      .join('session', 'session_users.session_id', '=', 'session.id')
+      .join('users', 'session_users.user_id', '=', 'users.id')
+      .where({
+        username: sName
+      })
+      .select('session.id')
+      .then(function(ids){
+        return ids.reduce(function(promise, item) {
+          return promise.then(function() {
+              return getSessionById(item.id)
+                .then(function(res) {
+                  output.push(res);
+              });
+          });
+        }, Promise.resolve());
+      })
+      .then(function(data){
+        //console.log("output=",output);
+        resolve(output);
+      })
+    });
+  }
+
   function getSessionById(sId){
     return new Promise(function(resolve,reject){
       // handle request for individual session-------------------
@@ -285,7 +327,7 @@ module.exports = function(express) {
           console.log("Error getting session data, id="+sId+", err:",err);
           reject(err);
         } else {
-          console.log("putting it all together");  // results.queryone...
+          console.log("putting it all together");
           var ssn = {};
           var genres = [];
           var instruments = [];
