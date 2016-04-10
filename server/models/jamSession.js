@@ -14,75 +14,14 @@ module.exports = function(express) {
       if (rq && rq.id) {
         console.log("request for sessionId = ",rq.id);
         // handle request for individual session-------------------
-        async.parallel({
-          queryone: function( parCb ){
-            console.log("getting genres");
-            var query = knex('genre').select('genre').where({
-              session_id: rq.id
-            });
-            query.exec( function(err, results ) {
-              parCb( err, results );
-            } );
-          },
-          querytwo: function( parCb ){
-            console.log("getting needInstruments");
-            var query = knex('needInstrument').select('instrument').where({
-              session_id: rq.id
-            });
-            query.exec( function(err, results ) {
-              parCb( err, results );
-            } );
-          },
-          querythree: function( parCb ){
-            console.log("getting participants");
-            var query = knex('session_users')
-              .join('session', 'session_users.session_id', '=', 'session.id')
-              .join('users', 'session_users.user_id', '=', 'users.id')
-            .where({
-              session_id : rq.id
-            })
-            .select('username');
-            query.exec( function(err, results ) {
-              parCb( err, results );
-            } );
-          },
-          queryfour: function( parCb ){
-            console.log("getting session data");
-            var query = knex('session').select('*').where({
-                  id: rq.id
-                });
-            query.exec( function(err, results ) {
-              parCb( err, results );
-            } );
-          },
-        },
-        function(err, results) {
-          if (err){
-            console.log("Error getting session data, id="+rq.id+", err:",err);
-            res.status(400).send("Could not find requested sessions by id ("+rq.id+")", err);
-          } else {
-            console.log("putting it all together");  // results.queryone...
-            var ssn = {};
-            var genres = [];
-            var instruments = [];
-            var participants = [];
-            for (var i=0;i<results.queryone.length;i++){
-              genres.push(results.queryone[i].genre)
-            }
-            for (var j=0;j<results.querytwo.length;j++){
-              instruments.push(results.querytwo[j].instrument);
-            }
-            for (var k=0;k<results.querythree.length;k++){
-              participants.push(results.querythree[k].username)
-            }
-            ssn = results.queryfour[0];
-            ssn['genres'] = genres;
-            ssn['instruments'] = instruments;
-            ssn['participants'] = participants;
-            console.log("jamSession:request for session by id "+rq.id+" successful. Returning: "+ssn);
-            res.status(200).send(ssn);
-            //return ssn; // success!
-          } 
+        getSessionById(rq.id)
+        .then(function(data){
+          console.log("returning session id data");
+          res.status(200).send(JSON.stringify(data));
+        })
+        .catch(function(err){
+          console.log("could not get session data by id "+rq.id+", err:", err);
+          res.status(400).send(err);
         })
       } else if (rq && rq.name) {
         // handle request to get list of sessions by username-------
@@ -296,6 +235,80 @@ module.exports = function(express) {
     return false;
   }
 
+  function getSessionById(sId){
+    return new Promise(function(resolve,reject){
+      // handle request for individual session-------------------
+      async.parallel({
+        queryone: function( parCb ){
+          console.log("getting genres");
+          var query = knex('genre').select('genre').where({
+            session_id: sId
+          });
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+        querytwo: function( parCb ){
+          console.log("getting needInstruments");
+          var query = knex('needInstrument').select('instrument').where({
+            session_id: sId
+          });
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+        querythree: function( parCb ){
+          console.log("getting participants");
+          var query = knex('session_users')
+            .join('session', 'session_users.session_id', '=', 'session.id')
+            .join('users', 'session_users.user_id', '=', 'users.id')
+          .where({
+            session_id : sId
+          })
+          .select('username');
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+        queryfour: function( parCb ){
+          console.log("getting session data");
+          var query = knex('session').select('*').where({
+                id: sId
+              });
+          query.exec( function(err, results ) {
+            parCb( err, results );
+          } );
+        },
+      },
+      function(err, results) {
+        if (err){
+          console.log("Error getting session data, id="+sId+", err:",err);
+          reject(err);
+        } else {
+          console.log("putting it all together");  // results.queryone...
+          var ssn = {};
+          var genres = [];
+          var instruments = [];
+          var participants = [];
+          for (var i=0;i<results.queryone.length;i++){
+            genres.push(results.queryone[i].genre)
+          }
+          for (var j=0;j<results.querytwo.length;j++){
+            instruments.push(results.querytwo[j].instrument);
+          }
+          for (var k=0;k<results.querythree.length;k++){
+            participants.push(results.querythree[k].username)
+          }
+          ssn = results.queryfour[0];
+          ssn['genres'] = genres;
+          ssn['instruments'] = instruments;
+          ssn['participants'] = participants;
+          console.log("jamSession:request for session by id "+sId+" successful. Returning: "+JSON.stringify(ssn));
+          resolve(ssn);
+        } 
+      })
+    });
+  }
   // session/search
   router.route('/search')
     .get(function(req, res){
