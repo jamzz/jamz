@@ -300,9 +300,9 @@ module.exports = function(express) {
             participants.push(results.querythree[k].username)
           }
           ssn = results.queryfour[0];
-          ssn['genres'] = genres;
-          ssn['instruments'] = instruments;
-          ssn['participants'] = participants;
+          ssn.genres = genres;
+          ssn.instruments = instruments;
+          ssn.participants = participants;
           console.log("jamSession:request for session by id "+sId+" successful. Returning: "+JSON.stringify(ssn));
           resolve(ssn);
         } 

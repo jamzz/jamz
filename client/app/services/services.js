@@ -9,9 +9,8 @@ angular.module("jamz.services", [])
         method: 'GET',
         url: '/session'
       })
-      .then(function (data){
-        console.log("data.data: ", data.data);
-        return data.data
+      .then(function (resp){
+        return resp.data
       })
       .catch(function(err) {
         console.error(err);
@@ -36,14 +35,12 @@ angular.module("jamz.services", [])
     var Users = [];
     // get current users
     var getUsers = function () {
-      console.log("trying to work")
       return $http({
         method: 'GET',
         url: '/user'
       })
-      .then(function (data) {
-        console.log("heres your data", data);
-        return data.data;
+      .then(function (resp) {
+        return resp.data;
       })
       .catch(function (err) {
         console.error(err);
@@ -75,10 +72,10 @@ angular.module("jamz.services", [])
       })
     }
 
-    var getMySessions = function (data) {
+    var getMySessions = function (sessionId) {
       return $http({
         method: 'GET',
-        url: '/sampleSeshData',
+        url: '/sesssion:' + sessionId,
       })
       .then(function (resp) {
         return resp.data

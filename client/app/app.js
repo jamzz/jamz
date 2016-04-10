@@ -11,6 +11,7 @@ angular.module('jamz', [
   'jamz.search-musicians',
   'jamz.search-sessions',
   'ngAnimate',
+  'ngCookies',
   'ui.bootstrap',
   'ui.router'
   ])

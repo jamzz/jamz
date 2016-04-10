@@ -1,6 +1,6 @@
 angular.module('jamz.dash-create', [])
 
-  .controller('CreateCtrl', function ($scope, Dash) {
+  .controller('CreateCtrl', function ($scope, $cookies, Dash) {
 
     $scope.amount = 0;
 
@@ -50,7 +50,7 @@ angular.module('jamz.dash-create', [])
 
         // not handling arrays yet
         var session = {
-          sessionId: 1,
+          sessionId: $cookies.get('sessionId'),
           title: $scope.title,
           description: $scope.description,
           genre: genres,
