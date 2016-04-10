@@ -36,11 +36,11 @@ module.exports = function(express) {
           res.status(400).send("Could not find requested sessions by name ("+rq.name+")");
         })
       } else {
-        // show all sessions-------------------------------
-        knex.select().table('session')
+        // default to show all sessions-------------------------------
+        getAllSessions()
         .then(function(data){
-          console.log("jamSession:/: returning:", data);
-          res.status(200).send(data);
+          console.log("jamSession:/: returning:", JSON.stringify(data));
+          res.status(200).send(JSON.stringify(data));
         })
         .catch(function(err){
           console.log("Error retrieving session list: ", err);
@@ -229,6 +229,27 @@ module.exports = function(express) {
     return false;
   }
 
+  function getAllSessions(){
+    return new Promise(function(resolve,reject){
+      var output = [];
+      knex.select('id').table('session')
+      .then(function(ids){
+        return ids.reduce(function(promise, item) {
+          return promise.then(function() {
+              return getSessionById(item.id)
+                .then(function(res) {
+                  output.push(res);
+              });
+          });
+        }, Promise.resolve());
+      })
+      .then(function(data){
+        //console.log("output=",output);
+        resolve(output);
+      })
+    });
+  }
+  
   function getSessionsByName(sName) {
     return new Promise(function(resolve,reject){
       var output = [];
