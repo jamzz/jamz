@@ -17,9 +17,6 @@ module.exports = function(express) {
       if (rq && rq.id) {
         // handle request for individual user--------------
         console.log("user request for individual user id ",rq.id);
-        //knex('users').where({
-        //  id: rq.id
-        //}).select('*')
         getUserById(rq.id)
         .then(function(data){
           console.log("user:request for user id "+rq.id+" successful. Returning: "+data);
@@ -48,14 +45,15 @@ module.exports = function(express) {
         })
       } else {
         // show all users-------------------------------
-        knex.select().table('users')
+        //knex.select().table('users')
+        getAllUsers()
         .then(function(data){
-          console.log("user:/: returning:", data);
-          res.status(200).send(data);          
+          console.log("user:/: returning:", JSON.stringify(data));
+          res.status(200).send(JSON.stringify(data));          
         })
         .catch(function(err){
           console.log("Error retrieving users list: ", err);
-          res.status(401).send(data);
+          res.status(401).send(err);
         })
       }
     })
@@ -101,6 +99,27 @@ module.exports = function(express) {
         }
       }
     });
+
+  function getAllUsers(){
+    return new Promise(function(resolve,reject){
+      var output = [];
+      knex.select('id').table('users')
+      .then(function(ids){
+        return ids.reduce(function(promise, item) {
+          return promise.then(function() {
+              return getUserById(item.id)
+                .then(function(res) {
+                  output.push(res);
+              });
+          });
+        }, Promise.resolve());
+      })
+      .then(function(data){
+        //console.log("output=",output);
+        resolve(output);
+      })
+    });
+  }
 
   function getUserById(uId){
     return new Promise(function(resolve,reject){
