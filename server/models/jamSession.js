@@ -1,5 +1,6 @@
 //This function is invoked immediately and gets express passed in from server.js
 var knex = require('../db')
+var async = require('async');
 
 module.exports = function(express) {
 
@@ -11,17 +12,77 @@ module.exports = function(express) {
       console.log('---received sessions GET, query='+JSON.stringify(req.query));
       var rq = req.query;
       if (rq && rq.id) {
+        console.log("request for sessionId = ",rq.id);
         // handle request for individual session-------------------
-        knex('session').where({
-          id: rq.id
-        }).select('*')
-        .then(function(data){
-          console.log("jamSession:request for sessionId "+rq.id+" successful. Returning: "+data[0]);
-          res.status(200).send(data[0]);
-        })
-        .catch(function(error){
-          console.log("jamSession:request for sessionId "+rq.id+" failed. Error: "+error);
-          res.status(400).send("Could not find requested sessionId ("+rq.id+")");
+        async.parallel({
+          queryone: function( parCb ){
+            console.log("getting genres");
+            var query = knex('genre').select('genre').where({
+              session_id: rq.id
+            });
+            query.exec( function(err, results ) {
+              parCb( err, results );
+            } );
+          },
+          querytwo: function( parCb ){
+            console.log("getting needInstruments");
+            var query = knex('needInstrument').select('instrument').where({
+              session_id: rq.id
+            });
+            query.exec( function(err, results ) {
+              parCb( err, results );
+            } );
+          },
+          querythree: function( parCb ){
+            console.log("getting participants");
+            var query = knex('session_users')
+              .join('session', 'session_users.session_id', '=', 'session.id')
+              .join('users', 'session_users.user_id', '=', 'users.id')
+            .where({
+              session_id : rq.id
+            })
+            .select('username');
+            query.exec( function(err, results ) {
+              parCb( err, results );
+            } );
+          },
+          queryfour: function( parCb ){
+            console.log("getting session data");
+            var query = knex('session').select('*').where({
+                  id: rq.id
+                });
+            query.exec( function(err, results ) {
+              parCb( err, results );
+            } );
+          },
+        },
+        function(err, results) {
+          if (err){
+            console.log("Error getting session data, id="+rq.id+", err:",err);
+            res.status(400).send("Could not find requested sessions by id ("+rq.id+")", err);
+          } else {
+            console.log("putting it all together");  // results.queryone...
+            var ssn = {};
+            var genres = [];
+            var instruments = [];
+            var participants = [];
+            for (var i=0;i<results.queryone.length;i++){
+              genres.push(results.queryone[i].genre)
+            }
+            for (var j=0;j<results.querytwo.length;j++){
+              instruments.push(results.querytwo[j].instrument);
+            }
+            for (var k=0;k<results.querythree.length;k++){
+              participants.push(results.querythree[k].username)
+            }
+            ssn = results.queryfour[0];
+            ssn['genres'] = genres;
+            ssn['instruments'] = instruments;
+            ssn['participants'] = participants;
+            console.log("jamSession:request for session by id "+rq.id+" successful. Returning: "+ssn);
+            res.status(200).send(ssn);
+            //return ssn; // success!
+          } 
         })
       } else if (rq && rq.name) {
         // handle request to get list of sessions by username-------
@@ -214,15 +275,15 @@ module.exports = function(express) {
       return "area should be a string value";
     } else if (!obj.hasOwnProperty('location') || (typeof obj.location !== 'string')) {
       return "location should be a string value";
-    } else if (!obj.hasOwnProperty('genre') || (typeof obj.location !== 'string')) {
+    } else if (!obj.hasOwnProperty('genre') || (typeof obj.location !== 'string')) {  // TODO: change this to 'genres'
       return "genre should be a string value";
     } else if (!obj.hasOwnProperty('description') || (typeof obj.description !== 'string')) {
       return "description should be a string value";
     } else if (!obj.hasOwnProperty('experience') || (typeof obj.experience   !== 'string')) {
       return "experience should be a string value";
-    } else if (!obj.hasOwnProperty('needInstruments') || (!Array.isArray(obj.needInstruments))) {
+    } else if (!obj.hasOwnProperty('needInstruments') || (!Array.isArray(obj.needInstruments))) { // TODO: change this to 'needed'
       return "neededInstruments should be an array of string values"; // TODO: check contents of these arrays
-    } else if (!obj.hasOwnProperty('musicians') || (!Array.isArray(obj.musicians))) {
+    } else if (!obj.hasOwnProperty('musicians') || (!Array.isArray(obj.musicians))) { // TODO: remove this requirement
       return "musicians should be an array of string values";
     }
     return false;
@@ -235,6 +296,19 @@ module.exports = function(express) {
     return false;
   }
 
+  // session/search
+  router.route('/search')
+    .get(function(req, res){
+      //get sessions
+      var sessions = "put actual sessions here";
+      if(typeof sessions === "string") throw new Error("I wanted an object, thx.")
+      if(!req.query) throw new Error("didn't get a query")
+
+      return paginate(filterSessions(req.query, sessions), req.query.page);
+    })
+    .all(function(req, res){
+      res.status(404).send("Try get method");
+    })
 
   // session/search
   router.route('/search')
