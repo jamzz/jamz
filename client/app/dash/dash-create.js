@@ -4,6 +4,31 @@ angular.module('jamz.dash-create', [])
 
     $scope.amount = 0;
 
+    $scope.expOptions = [
+      {
+        name: 'Any',
+        value: 'any'
+      },
+      {
+        name: 'Novice',
+        value: 'novice'
+      },
+      {
+        name: 'Intermediate',
+        value: 'intermediate'
+      },
+      {
+        name: 'Advanced',
+        value: 'advanced'
+      },
+      {
+        name: 'Professional',
+        value: 'professional'
+      }
+    ];
+
+    $scope.experience = $scope.expOptions[0];
+
     $scope.createSession = function() {
       // var check = confirm("Are you sure you want to create this session?");
       var check = true;
@@ -12,7 +37,12 @@ angular.module('jamz.dash-create', [])
         var genres = $scope.genres
           .split(',')
           .map(function(val){ return val.trim(); })
-          .filter(function(val){ return val !== '' });
+          .filter(function(val){ return val !== '' })
+          .join(', ')
+          .trim();
+
+          console.log("genres", genres)
+
         var instruments = $scope.instruments
           .split(',')
           .map(function(val){ return val.trim(); })
@@ -23,12 +53,13 @@ angular.module('jamz.dash-create', [])
           sessionId: 1,
           title: $scope.title,
           description: $scope.description,
-          genres: genres,
+          genre: genres,
           paidAmount: $scope.amount,
-          experience: $scope.experience,
-          instrumentsNeeded: instruments,
+          experience: $scope.experience.value,
+          needInstruments: instruments,
           area: $scope.city,
           location: $scope.location,
+          musicians: [], // temporary
           date: $scope.date.toDateString(), // does this belong here?
           time: $scope.time.toLocaleString('en-US', {hour12: true}) // does this belong here?
         };

@@ -13,10 +13,9 @@
     </div>
 
     <div class='col-sm-4'>
-
-
       <p>Experience:<br>
-      <input type='text' placeholder='Experience' ng-model='experience'></p>
+        <select ng-model='experience' ng-options="option.name for option in expOptions">
+        </select></p>
 
       <p>Instruments:<br>
       <input type='text' placeholder='Instruments' ng-model='instruments'>

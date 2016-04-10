@@ -37,6 +37,11 @@ input {
   max-width: 415px;
   max-height: 350px;
 }*/
+
+.logout {
+  float: right;
+}
+
 .btn-instruments {
     display: inline-block;
     padding-bottom: 6px;

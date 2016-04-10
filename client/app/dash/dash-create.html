@@ -17,14 +17,9 @@
     <p>Paid amount in USD:<br>
     <input type='number' placeholder='Paid Amount' ng-model='amount'></p>
 
-    <!--Change to a dropdown-->
     <p>Experience:<br>
-    <select ngOptions ng-model='experience'>
-      <option value='Novice'>Novice</option>
-      <option value='Intermediate'>Intermediate</option>
-      <option value='Advanced'>Advanced</option>
-      <option value='Professional'>Professional</option>
-    </select>
+    <select ng-model='experience' ng-options="option.name for option in expOptions">
+        </select></p>
 
     <p>Instruments Needed:<br>
     <input type='text' placeholder='Instruments' ng-model='instruments'>

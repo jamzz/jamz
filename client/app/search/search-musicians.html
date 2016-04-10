@@ -1,36 +1,24 @@
 <div class="container">
   <div class='row'>
 
-    <div class='col-sm-4'>
-      <p>Session Name:<br>
-      <input type='text' placeholder='Session Name' ng-model='title'></p>
+    <div class='col-sm-6'>
+      <p>Name: <br>
+      <input type='text' placeholder='Name' ng-model='name'></p>
 
-      <p>Genre:<br>
-      <input type='text' placeholder='Genre' ng-model='genres'>
-      <br>*Separate by Commas</p>
-
-      <p><input type='checkbox' placeholder='Yes/No' ng-model='paid'> Paid</p>
+      <p>Username: <br>
+      <input type='text' placeholder='Username' ng-model='username'></p>
     </div>
 
-    <div class='col-sm-4'>
+    <div class='col-sm-6'>
 
-
-      <p>Experience:<br>
-      <input type='text' placeholder='Experience' ng-model='experience'></p>
-
-      <p>Instruments:<br>
+      <p>Instruments: <br>
       <input type='text' placeholder='Instruments' ng-model='instruments'>
       <br>*Separate by Commas</p>
-    </div>
 
-    <div class='col-sm-4'>
-      <p>City:<br>
-      <input type='text' placeholder='City' ng-model='city'></p>
+      <p>Bands: <br>
+      <input type='text' placeholder='Band' ng-model='band'></p>
 
-      <p>Location:<br>
-      <input type='text' placeholder='Location' ng-model='location'></p>
-
-      <p><br><button ng-click='searchSessions()'>Search</button></p>
+      <p><br><button ng-click='searchMusicians()'>Search</button></p>
     </div>
 
   </div>
