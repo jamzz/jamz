@@ -182,14 +182,11 @@ module.exports = function(express) {
           //for (var k=0;k<results.querythree.length;k++){
           //  friends.push(results.querythree[k].username)
           //}
-          for (var n=0;n<results.queryfour.length;n++){
-            sessions.push(results.queryfour[n].session)
-          }
           usr = results.queryfive[0];
           usr['instruments'] = instruments;
           usr['bands'] = bands;
           //usr['friends'] = friends;
-          usr['sessions'] = sessions;
+          usr['sessions'] = results.queryfour;
           console.log("user:request for user by id "+uId+" successful. Returning: "+JSON.stringify(usr));
           resolve(usr);
         } 
