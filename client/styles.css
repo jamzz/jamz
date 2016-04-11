@@ -1,12 +1,13 @@
-h5 {
-  font-size: 5px;
-}
+
 input {
   border-radius: 4.20px;
 }
 @font-face {
   font-family: Warnes-Regular;
   src:url("./assets/warnes/Warnes-Regular.ttf");
+}
+.jumbotron {
+  background-color: white;
 }
 .buttons {
   display: block;
@@ -26,12 +27,16 @@ input {
   padding: 5px;
   background-color:#F8F8F8;
   border-radius: 4.20px;
+  box-shadow:  10px 10px 5px #CDC0C0;
+  max-width: 720px;
 }
 .users{
   margin: 10px;
   padding: 5px;
   background-color:#F8F8F8;
   border-radius: 4.20px;
+  max-width: 720px;
+  box-shadow: 10px 10px 5px #CDC0C0 ;
 }
 .profile {
   margin: 10px;

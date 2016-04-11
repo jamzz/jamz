@@ -75,7 +75,7 @@ angular.module("jamz.services", [])
     var getMySessions = function (sessionId) {
       return $http({
         method: 'GET',
-        url: '/sesssion:' + sessionId,
+        url: '/sesssion:'+sessionId,
       })
       .then(function (resp) {
         return resp.data
@@ -133,7 +133,7 @@ angular.module("jamz.services", [])
       console.log("gonna edit this fool")
       return $http({
         method: 'PUT',
-        url: 'user/:id',
+        url: 'user/',
         data: profile
       })
       .then(function (resp) {
@@ -190,7 +190,7 @@ angular.module("jamz.services", [])
         signup: signup,
         signin: signin
       }
-      
+
   })
 
   .factory('Search', function ($http) {
