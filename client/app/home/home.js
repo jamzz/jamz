@@ -16,6 +16,7 @@ angular.module('jamz.home', [])
     $scope.logout = function(){
       Sessions.logout()
         .then(function(data){
+          $location.path("/signup")
           return data
         })
         .catch(function(err){

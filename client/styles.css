@@ -17,6 +17,9 @@ input {
 .nav {
   font-family: Warnes-Regular;
 }
+.navbar-brand {
+  font-family: 'Permanent Marker', cursive;
+}
 .sessions {
   margin: 10px;
   text-align: center;
@@ -42,9 +45,9 @@ input {
   margin-top: 5px;
 }
 
-.logout {
+/*.logout {
   float: right;
-}
+}*/
 
 .btn-instruments {
     display: inline-block;
