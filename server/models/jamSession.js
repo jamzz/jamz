@@ -63,7 +63,7 @@ module.exports = function(express) {
       } else {
         // sanity check input
         //var error = checkCreateBody(req.body.newSession);
-        if (!error){ // error will contain description of error, false if ok
+        if (true){ // error will contain description of error, false if ok
           var bodyObj = req.body.newSession;
           // build object for insertion into sessions table
           var sessionObj = {};
@@ -413,8 +413,8 @@ module.exports = function(express) {
 
 
   function filterSessions(query, sessions){
-    console.log("filterSessions:query:",query);
-    console.log("filterS")
+    console.log("filterSessions:query:",query, sessions);
+
     var currentList = sessions.slice();
 
     if(isValid(query.neededInstruments))
