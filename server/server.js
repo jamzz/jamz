@@ -24,8 +24,8 @@ app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
 
 //Routers
-app.use('/user', userModel);
-app.use('/session', jamSessionModel);
+app.use('/user', isLoggedIn, userModel);
+app.use('/session', isLoggedIn, jamSessionModel);
 app.use('/auth', authModel);
 
 //Serve test data
@@ -46,21 +46,25 @@ function isLoggedIn(req, res, next) {
   if( !req.cookies ) {
     throw new Error("Cookes aren't parsed");
   }
-
-  db('users').where({sessionId: req.cookies.sessionId}).select("username")
+  console.log("auth:isLoggedIn:",req.cookies, req.body, req.query); 
+  db('users').where({sessionId: req.query.sessionId}).select("username") // used to use req.cookies
   .then(function(row){
     console.log("data retrieved", row[0])
     if(row[0] === null || row[0] === undefined)
       req.loggedIn = false;
 
-    else
+    else{
+      console.log("row0=",row[0]);
       req.loggedIn = true;
+      req.user = row[0].username;
+    }
 
     next();
   })
   .catch(function(err){
     if(err instanceof Error) throw err;
     console.log("in strict auth middleware", err);
+    next();
   })
 }
 
