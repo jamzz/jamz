@@ -230,8 +230,3 @@ angular.module("jamz.services", [])
       searchUsers: searchUsers
     }
   })
-
-
-
-
-
