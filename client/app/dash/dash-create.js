@@ -60,6 +60,7 @@ angular.module('jamz.dash-create', [])
           needInstruments: instruments,
           area: $scope.city,
           location: $scope.location,
+          musicians: [],
           date: $scope.date.toDateString(), // does this belong here?
           time: $scope.time.toLocaleString('en-US', {hour12: true}) // does this belong here?
         };
