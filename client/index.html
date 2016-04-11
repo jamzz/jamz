@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Jamz</title>
-
-
+  <link rel="shorcut icon" href="/favicon.png" type="image/png">
 </head>
 
 <body>
@@ -18,37 +17,27 @@
       <li><a class="btn" ui-sref="dashboard">DASHBOARD</a></li>
       <li><a class="btn" ui-sref="profile">PROFILE</a></li>
       <li><a class="btn" ui-sref="signin">LOGIN</a></li>
+      <li><a class="btn logout" ng-controller="MainCtrl" ng-click='logout()'>LOGOUT</li>
       <li><a class="btn" ui-sref="search">
         <span class="glyphicon glyphicon-search"></span></a></li>
-      <li><a class="btn logout" ng-controller="MainCtrl" ng-click='logout()'>LOGOUT</li>
-
     </ul>
-    <a><span class="glyphicon glyphicon-bell"></span></a>
-  </nav>
- 
-<!--   <div class="container">
-    <div uib-collapse="searchCollapsed">
-      <p>
-        <div class="well well-lg">
-          <div ui-view="show-search"></div>
-        </div>
-      </p>
+    <div class="buttons"><a><span class="glyphicon glyphicon-bell"></span></a><br>
+    <a class="btn" ui-sref="search">
+        <span class="glyphicon glyphicon-search"></span></a>
     </div>
-  </div> -->
+  </nav>
 
   <div class="container">
     <div ui-view></div>
   </div>
+
 </body>
 
 <footer>
   <script src="./lib/angular/angular.js"></script>
   <script src="./lib/angular-animate/angular-animate.js"></script>
   <script src="./lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <!-- <script src="./lib/angular-cookies/angular-cookies.js"></script> -->
-  <!-- <script src="./lib/angular-mocks/angular-mocks.js"></script> -->
-  <!-- <script src="./lib/angular-resource/angular-resource.js"></script> -->
-  <!-- <script src="./lib/angular-sanitize/angular-sanitize.js"></script> -->
+  <script src="./lib/angular-cookies/angular-cookies.js"></script>
   <script src="./lib/angular-touch/angular-touch.js"></script>
   <script src="./lib/angular-ui-router/release/angular-ui-router.js"></script>
 
@@ -64,6 +53,7 @@
   <script src="app/auth/auth.js"></script>
   <script src="app/services/services.js"></script>
 
+  <link rel="fontsheet" type="text" href="../assets/warnes/Warnes-Regular.ttf">
   <link rel="stylesheet" type="text/css" href="styles.css">
   <link rel="stylesheet" type="text/css" href="./lib/bootstrap-css-only/css/bootstrap.css">
 </footer>
