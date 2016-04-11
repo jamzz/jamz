@@ -41,7 +41,7 @@ knex.schema.createTableIfNotExists('users', function(table) {
   table.string('location');
   table.string('description');
   table.string('experience');
-  table.integer('owner');
+  table.string('owner');
   table.timestamps();
 })
 .createTableIfNotExists('session_users', function(table) {
