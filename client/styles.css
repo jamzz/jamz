@@ -1,4 +1,3 @@
-
 input {
   border-radius: 4.20px;
 }
@@ -6,27 +5,39 @@ input {
   font-family: Warnes-Regular;
   src:url("./assets/warnes/Warnes-Regular.ttf");
 }
-/*.diff.jumbotron {
-  font-family: Warnes-Regular;
-}*/
+
 .jumbotron {
-  background-color: white;
+  background-color: transparent;
   font-family: arial, "Times New Roman";
+  color:#5A0808;
 }
 
 .buttons {
   display: block;
   float: right;
   text-align: center;
-  padding: 3px;
+  padding: 10px;
+  margin-top: 7px;
+}
+.navbar {
+  background: linear-gradient(130deg, rgba(133,199,198,1) 0%, rgba(73, 203, 203,1) 100%);
 }
 .nav {
   font-family: Warnes-Regular;
 }
+.navbar-default .navbar-brand {
+  color:#5A0808;
+}
 .navbar-brand {
   font-family: 'Permanent Marker', cursive;
+  color: #5A0808 ;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color:#808080;
 }
 .sessions {
+  color:#8C7979;
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
@@ -35,8 +46,10 @@ input {
   border-radius: 4.20px;
   box-shadow:  10px 10px 5px #CDC0C0;
   max-width: 720px;
+  
 }
 .users{
+  color: #8C7979;
   margin: 10px;
   padding: 5px;
   background-color:#F8F8F8;
@@ -45,11 +58,12 @@ input {
   box-shadow: 10px 10px 5px #CDC0C0 ;
 }
 .profile {
+  color:#8C7979;
   margin: 10px;
   padding: 5px;
-  background-color:#F8F8F8;
   border-radius: 4.20px;
   box-shadow:  10px 10px 5px #CDC0C0 ;
+  background-color: #F8F8F8;
 }
 .edit-btn {
   float: right;
@@ -62,14 +76,6 @@ input {
   margin-top: 10px;
   color: gray;
 }
-
-
-.jumbotron {
-  background-color: white;
-}
-/*.logout {
-  float: right;
-}*/
 
 .btn-instruments {
     display: inline-block;
@@ -86,18 +92,10 @@ input {
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
-    background-color: rgba(166, 189, 46, 0.11);
+    background-color: rgba(90, 8, 8, 0.2);
     height: 30px;
 }
-/*.glyphicon.glyphicon-search {
-  float: right;
-  margin-top: -3px;
-}*/
+
 .glyphicon.glyphicon-fire {
   font-size: 12px;
-}/*
-.glyphicon.glyphicon-bell {
-  float: right;
-  padding-right: 10px;
-  padding-top: 5px;
-}*/
+}
