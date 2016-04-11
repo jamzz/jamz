@@ -1,37 +1,61 @@
 <div class="container">
-    <h1 class="jumbotron">Profile</h1>
-    <div class="profile container">
+  <h1 class="jumbotron">Profile</h1>
+
+  <div class="profile container" ng-if="!editState">
     <div class="edit-btn"><a class="btn btn-default" type="button" ng-click='editProfile()'><span id="pencil" class="glyphicon glyphicon-pencil"></span></a></div>
 
+    <div class="col-sm-3">
+      <div><img src='{{profile.picture}}'></div>
+      <div><h5>Name: </h5>{{profile.name }}</div>
+      <div><h5>Contact Info: </h5>{{profile.contactEmail }}</div>
+      <div><h5>Username: </h5>{{profile.username}}</div>
+    </div>
+
+    <div class="col-sm-3">
+      <div><h5>My Instruments:</h5>
+        <button class="btn-instruments" ng-repeat="instrument in profile.instruments">
+          <span class="glyphicon glyphicon-fire"> {{ profile.instrument}}</span>
+        </button>
+      </div>
+      <div><h5>Experience:</h5>
+      {{profile.experience}}
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div><h5>My Bands:</h5>
+        <div ng-repeat="band in profile.bands">
+          {{profile.band}}
+        </div>
+      </div>
+      <div><h5>My Friends:</h5>
+        <div ng-repeat="friend in profile.friends">
+          {{profile.friend}}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+    <div class="profile container" ng-if="editState">
       <div class="col-sm-3">
         <div><img src='{{profile.picture}}'></div>
-        <div><h5>Name: </h5>{{profile.name }}</div>
-        <div><h5>Contact Info: </h5>{{profile.contactEmail }}</div>
-        <div><h5>Username: </h5>{{profile.username}}</div>
-      </div>
-      <div class="col-sm-3">
-        <div><h5>My Instruments:</h5>
-          <button class="btn-instruments" ng-repeat="instrument in profile.instruments">
-            <span class="glyphicon glyphicon-fire"> {{ profile.instrument}}</span>
-          </button>
-        </div>
-        <div><h5>Experience:</h5>
-        {{profile.experience}}
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div><h5>My Bands:</h5>
-          <div ng-repeat="band in profile.bands">
-            {{profile.band}}
-          </div>
-        </div>
-        <div><h5>My Friends:</h5>
-          <div ng-repeat="friend in profile.friends">
-            {{profile.friend}}
-          </div>
-        </div>
-      </div>
+        <div><b>Username: {{profile.username}}</b></div>
+        <div>Name: <input type='text' ng-model='profile.name'></input></div>
+        <div>Contact Email: <input type='text' ng-model='profile.contactEmail'></input></div>
+        <div>Contact Phone: <input type='text' ng-model='profile.contactPhone'></input></div>
       </div>
 
+      <div class="col-sm-3">
+        <div>My Instruments: <input type='text' ng-model='newInstruments'></input></div>
+        <div>Experience: <input type='text' ng-model='profile.experience'></input></div>
+        <div>Description: <input type='text' ng-model='profile.description'></input></div>
+      </div>
+
+      <div class="col-sm-3">
+        <div>My Bands: <input type='text' ng-model='newBands'></input></div>
+        <div>Picture URL: <input type='text' ng-model='profile.picture'></input></div>
+      </div>
     </div>
+</div>
 
