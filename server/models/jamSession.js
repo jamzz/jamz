@@ -16,7 +16,7 @@ module.exports = function(express) {
         // handle request for individual session-------------------
         getSessionById(rq.id)
         .then(function(data){
-          console.log("returning session id data");
+          console.log("returning session id data", data);
           res.status(200).send(JSON.stringify(data));
         })
         .catch(function(err){
@@ -44,7 +44,7 @@ module.exports = function(express) {
         })
         .catch(function(err){
           console.log("Error retrieving session list: ", err);
-          res.status(401).send(data);
+          res.status(401).send("Could retrieve sessions, error:",err);
         })
       }
     })
@@ -157,7 +157,7 @@ module.exports = function(express) {
   router.route('/update') 
     .post(function(req, res) {
       console.log('received update session POST');
-      if(! req || !req.body || !req.body.updateSession) {
+      if(!req || !req.body || !req.body.updateSession) {
         res.status(400).send("/session/update expected a body with a newSession object");
       } else {
        // sanity check input
@@ -249,7 +249,7 @@ module.exports = function(express) {
       })
     });
   }
-  
+
   function getSessionsByName(sName) {
     return new Promise(function(resolve,reject){
       var output = [];
@@ -342,9 +342,9 @@ module.exports = function(express) {
             participants.push(results.querythree[k].username)
           }
           ssn = results.queryfour[0];
-          ssn['genres'] = genres;
-          ssn['instruments'] = instruments;
-          ssn['participants'] = participants;
+          ssn.genres = genres;
+          ssn.instruments = instruments;
+          ssn.participants = participants;
           console.log("jamSession:request for session by id "+sId+" successful. Returning: "+JSON.stringify(ssn));
           resolve(ssn);
         } 
