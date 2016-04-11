@@ -206,8 +206,7 @@ angular.module("jamz.services", [])
   })
 
   .factory('Search', function ($http) {
-
-
+    
     var searchSessions = function (data) {
       return $http({
         method: 'GET', 
