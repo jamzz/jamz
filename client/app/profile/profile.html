@@ -1,58 +1,37 @@
 <div class="container">
     <h1 class="jumbotron">Profile</h1>
-    <div class="profile container" ng-repeat="profile in profile">
+    <div class="profile container">
     <div class="edit-btn"><a class="btn btn-default" type="button" ng-click='editProfile()'><span id="pencil" class="glyphicon glyphicon-pencil"></span></a></div>
 
       <div class="col-sm-3">
-        <div><img src='{{user.picture}}'></div>
-        <div><h5>Name: </h5><strong>{{profile.name }}</strong></div>
-        <div><h5>Contact Info: </h5>{{profile.contactInfo.email }}</div>
+        <div><img src='{{profile.picture}}'></div>
+        <div><h5>Name: </h5><input type="text" placeholder="{{profile.name }}"></div>
+        <div><h5>Contact Info: <input type="text" placeholder="{{profile.contactEmail }}"></h5></div>
         <div><h5>My Music: </h5></div>
       </div>
       <div class="col-sm-3">
         <div><h5>My Instruments:</h5>
           <button class="btn-instruments" ng-repeat="instrument in profile.instruments">
-            <span class="glyphicon glyphicon-fire"> {{ instrument}}</span>
+            <span class="glyphicon glyphicon-fire"> {{ profile.instrument}}</span>
           </button>
         </div>
-        <!-- <div><h5>Sessions I'm in:</h5>
-          <div ng-repeat="session in user.sessions">
-            {{session}}
-          </div>
-        </div> -->
+        <div><h5>Experience:</h5>
+        {{profile.experience}}
+        </div>
       </div>
       <div class="col-sm-3">
         <div><h5>My Bands:</h5>
           <div ng-repeat="band in profile.bands">
-            {{band}}
+            {{profile.band}}
           </div>
         </div>
         <div><h5>My Friends:</h5>
           <div ng-repeat="friend in profile.friends">
-            {{friend}}
+            {{profile.friend}}
           </div>
         </div>
       </div>
       </div>
 
-<!--        <div>
-            <strong> {{profile.name  }}</strong>  
-        </div>
-        <h5>Instruments: </h5>
-        <div ng-repeat="instrument in profile.instruments">
-            {{instrument}}
-        </div>
-        <div>
-            <h5>My sessions: </h5>
-        </div>
-        <div ng-repeat="session in profile.sessions">
-            {{session}}
-        </div>
-        <div>
-            <h5>My bands: </h5>
-        </div>
-        <div ng-repeat="band in profile.bands">
-            {{band}}
-        </div> -->
     </div>
 
