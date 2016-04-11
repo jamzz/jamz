@@ -1,6 +1,7 @@
 //This function is invoked immediately and gets express passed in from server.js
 var knex = require('../db')
 var async = require('async');
+var request = require('request');
 
 module.exports = function(express) {
 
@@ -67,7 +68,7 @@ module.exports = function(express) {
           // build object for insertion into sessions table
           var sessionObj = {};
           sessionObj.paidAmount = bodyObj.paidAmount;
-          sessionObj.sessionId = bodyObj.sessionId;
+          //sessionObj.sessionId = bodyObj.sessionId;
           sessionObj.title = bodyObj.title;
           sessionObj.date = bodyObj.date;
           sessionObj.time = bodyObj.time;
@@ -81,7 +82,7 @@ module.exports = function(express) {
             var sId = rows[0]; // sId = id of session table, needed for foreign key for inserts
 
             // insert needed instrument (Strings) into needInstrument table
-            var needArr = bodyObj.needInstruments; // TODO: what name of field in body???
+            var needArr = bodyObj.needInstruments;
             // build array for insert command
             var insertArr = [];
             for (var i=0;i<needArr.length;i++){
@@ -118,15 +119,15 @@ module.exports = function(express) {
       res.status(404).send("Try using the POST method.");
     }); 
 
-  // delete a jam session -- TRIED THIS, don't know why the del() function doesn't work
+  // delete a jam session
   router.route('/delete')
     .post(function(req, res) {
     console.log('---received session delete POST');
     if(! req || !req.body || !req.body.deleteSession) {
       res.status(400).send("/session/delete expected a body with a deleteSession object");
-    } else {  // TODO: need to verify this is the owner doing this
+    } else {
+      //if (req.loggedIn){  // TODO: check to insure owner is one deleting session
         // sanity check input
-        //console.log("delete bodyObj:",req.body.deleteSession);
         var error = checkDeleteBody(req.body);
         if (!error){ // error will contain description of error, false if ok
           var sId = req.body.deleteSession;
@@ -147,6 +148,7 @@ module.exports = function(express) {
           console.log('jamSession:delete:error: ',error);
           res.status(400).send(error);
           }
+        //}
       }
   })
   .all(function(req, res){
@@ -351,29 +353,23 @@ module.exports = function(express) {
       })
     });
   }
-  // session/search
-  router.route('/search')
-    .get(function(req, res){
-      //get sessions
-      var sessions = "put actual sessions here";
-      if(typeof sessions === "string") throw new Error("I wanted an object, thx.")
-      if(!req.query) throw new Error("didn't get a query")
-
-      return paginate(filterSessions(req.query, sessions), req.query.page);
-    })
-    .all(function(req, res){
-      res.status(404).send("Try get method");
-    })
 
   // session/search
   router.route('/search')
     .get(function(req, res){
-      //get sessions
-      var sessions = "put actual sessions here";
-      if(typeof sessions === "string") throw new Error("I wanted an object, thx.")
-      if(!req.query) throw new Error("didn't get a query")
 
-      return paginate(filterSessions(req.query, sessions), req.query.page);
+      request('http://localhost:1337/session', function(err, response, body) {
+        if(err) console.log(err);
+        var sessions = JSON.parse(body);
+        console.log(typeof sessions);
+
+        if(typeof sessions === "string") throw new Error("I wanted an object, thx.")
+        if(!req.query) throw new Error("didn't get a query")
+
+          console.log("req.body", req.body, "req.query", req.query, Object.keys(req.query), Object.keys(req.body))
+
+        res.status(200).send(paginate(filterSessions(req.query, sessions), req.body.page));
+      })
     })
     .all(function(req, res){
       res.status(404).send("Try get method");
@@ -381,13 +377,15 @@ module.exports = function(express) {
 
 
   function filterSessions(query, sessions){
+    console.log("filterSessions:query:",query);
+    console.log("filterS")
     var currentList = sessions.slice();
 
     if(isValid(query.neededInstruments))
       currentList = currentList.filter(byArrayContainsMatch.bind(null, query.neededInstruments, "neededInstruments"))
 
     if(isValid(query.genre))
-      currentList = currentList.filter(byExactMatch.bind(null, query.genre, "genre"))
+      currentList = currentList.filter(byArrayContainsMatch.bind(null, query.genre, "genres"))
 
     if(isValid(query.paidAmount))
       currentList = currentList.filter(byPaid.bind(null, query.paidAmount, "paidAmount"));
@@ -409,6 +407,15 @@ module.exports = function(express) {
   //  if(page * 20 > arr.length)
   //    return paginate(arr, page-1);
 
+
+    console.log("prepaginated arr", arr);
+
+    page = page || 1;
+
+    if(arr.length<20)
+      return arr;
+
+
     return arr.slice( (page*20)-1, (page*20)+19 );
   }
 
@@ -426,7 +433,7 @@ module.exports = function(express) {
       : false;
   }
 
-  function valid(val){
+  function isValid(val){
     return val !== undefined && val !== ""
       ? true
       : false

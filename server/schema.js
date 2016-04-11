@@ -2,7 +2,7 @@ var knex = require('./db');
 
 knex.schema.createTableIfNotExists('users', function(table) {
   table.increments('id').primary();
-  table.integer('userId');
+  //table.integer('userId');
   table.string('username');
   table.string('password');
   table.string('sessionId');
@@ -41,7 +41,7 @@ knex.schema.createTableIfNotExists('users', function(table) {
   table.string('location');
   table.string('description');
   table.string('experience');
-  table.string('owner'); //id vs username vs name
+  table.integer('owner');
   table.timestamps();
 })
 .createTableIfNotExists('session_users', function(table) {
