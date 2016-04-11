@@ -58,6 +58,7 @@ module.exports = function(express) {
   router.route('/create')
     .post(function(req, res) {
       console.log('received create session POST');
+      var sId = 0;
       if(! req || !req.body || !req.body.newSession) {
         res.status(400).send("/session/create expected a body with a newSession object");
       } else {
@@ -80,7 +81,7 @@ module.exports = function(express) {
           knex.table('session').returning('id').insert(sessionObj)
           .then(function (rows){
             console.log("insert into session returned ", rows);
-            var sId = rows[0]; // sId = id of session table, needed for foreign key for inserts
+            sId = rows[0]; // sId = id of session table, needed for foreign key for inserts
 
             // insert needed instrument (Strings) into needInstrument table
             console.log("bodyObj.needInstruments",bodyObj.needInstruments)
@@ -90,8 +91,10 @@ module.exports = function(express) {
             for (var i=0;i<needArr.length;i++){
               insertArr.push({session_id: sId, instrument: needArr[i]});
             }
+            console.log("jamSession:create:needInstrument",insertArr);
             return knex('needInstrument').insert(insertArr)
           })
+          /*
           .then(function(data){
             // insert session musicians into session_users table
             console.log("bodyObj.musicians",bodyObj.musicians)
@@ -100,16 +103,19 @@ module.exports = function(express) {
             for (var j=0;j<musicians.length;j++){
               insertArr.push({session_id: sId, musician: musicians[j]});
             }
+            console.log("musicians:insertArr",insertArr, musicians[0]);
             return knex('session_users').insert(insertArr)  
           })
+          */
           .then(function(data){
             // insert session genres into genres table
             console.log("bodyObj.genres",bodyObj.genres)
             var genres = bodyObj.genres;
             insertArr = [];
             for (var k=0;k<genres.length;k++){
-              insertArr.push({session_id: sId, musician: genres[k]});
+              insertArr.push({session_id: sId, genre: genres[k]});
             }
+            console.log("genres:insertArr",insertArr, genres[0]);
             knex('genre').insert(insertArr)
             .then(function (result){
               res.status(201).send('Success');
@@ -397,7 +403,6 @@ module.exports = function(express) {
       request('http://localhost:1337/session', function(err, response, body) {
         if(err) console.log(err);
         var sessions = JSON.parse(body);
-        console.log(typeof sessions);
 
         if(typeof sessions === "string") throw new Error("I wanted an object, thx.")
         if(!req.query) throw new Error("didn't get a query")
