@@ -48,9 +48,10 @@ angular.module('jamz.dash-create', [])
           .map(function(val){ return val.trim(); })
           .filter(function(val){ return val !== '' });
 
+        var SID = $cookies.get('sessionId');
+
         // not handling arrays yet
         var session = {
-          sessionId: $cookies.get('sessionId'),
           title: $scope.title,
           description: $scope.description,
           genre: genres,
@@ -59,14 +60,13 @@ angular.module('jamz.dash-create', [])
           needInstruments: instruments,
           area: $scope.city,
           location: $scope.location,
-          musicians: [], // temporary
           date: $scope.date.toDateString(), // does this belong here?
           time: $scope.time.toLocaleString('en-US', {hour12: true}) // does this belong here?
         };
 
-        console.log("session created:", session);
+        console.log("session to be created:", session);
 
-        Dash.createSession(session)
+        Dash.createSession(session, SID)
         .then(function(data){
           //reset data when successfully created
           $scope.title = '';
