@@ -23,6 +23,7 @@ angular.module('jamz.search-musicians', [])
 
       Search.searchUsers(user)
       .then(function (data) {
+        $scope.users = data;
         return data;
       })
     }

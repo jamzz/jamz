@@ -66,6 +66,7 @@ angular.module('jamz.search-sessions', [])
 
       Search.searchSessions(session)
       .then(function (data) {
+        $scope.sessions = data;
         return data;
       })
     }

@@ -22,4 +22,39 @@
     </div>
 
   </div>
+
+  <h1 ng-if='users'>Results</h1>
+  <div class="users container" ng-repeat="user in users">
+    <div class="col-sm-4">
+      <div><img src='{{user.picture}}'></div>
+      <div><strong>{{user.username }}</strong>  <a><span class="glyphicon glyphicon-plus"></span></a></div>
+      <div>{{user.contactInfo.email }}  <a><span class="glyphicon glyphicon-envelope"></span></a>
+      </div>
+      <div><a><span class="glyphicon glyphicon-headphones"></span></a></div>
+    </div>
+    <div class="col-sm-4">
+      <div><h5>Plays:</h5>
+        <button class="btn-instruments" ng-repeat="instrument in user.instruments">
+          <span class="glyphicon glyphicon-fire"> {{ instrument}}</span>
+        </button>
+      </div>
+      <div><h5>Sessions I'm in:</h5>
+        <div ng-repeat="session in user.sessions">
+          {{session.title}}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div><h5>Bands:</h5>
+        <div ng-repeat="band in user.bands">
+          {{band}}
+        </div>
+      </div>
+      <div><h5>Friends:</h5>
+        <div ng-repeat="friend in user.friends">
+          {{friend}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
