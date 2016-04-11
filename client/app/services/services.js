@@ -143,10 +143,9 @@ angular.module("jamz.services", [])
     }
 
     var editProfile = function (profile) {
-      console.log("gonna edit this fool")
       return $http({
-        method: 'PUT',
-        url: 'user/',
+        method: 'POST',
+        url: 'user/update',
         data: profile
       })
       .then(function (resp) {
