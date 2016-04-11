@@ -75,7 +75,7 @@ angular.module("jamz.services", [])
     var getMySessions = function (sessionId) {
       return $http({
         method: 'GET',
-        url: '/session:'+sessionId,
+        url: '/session?sessionId=' + sessionId,
       })
       .then(function (resp) {
         return resp.data
