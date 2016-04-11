@@ -155,6 +155,35 @@ module.exports = function(express) {
     res.status(404).send("Try using the POST method.")
   });
 
+  // join a jam session -- NOT TESTED YET
+  router.route('/join') 
+    .post(function(req, res) {
+      console.log('received join session POST');
+      console.log(req.body);
+      if(!req || !req.body) {
+        res.status(400).send("/session/join expected body {jamSessionId: integer}");
+      } else {
+       // sanity check input
+        var error = false; // TODO: checkJoinBody(req.body.joinSession);
+        if (!error){
+          // query user table by username to get primary id
+          knex('users').where('username', '=', req.user).select('id')
+          .then(function(data){
+            console.log("join:user data:", data);
+            // insert record into session_users
+            return knex('session_users').insert({'session_id': JSON.parse(req.body.jamSessionId), 'user_id': data[0].id })
+          })
+          .then(function(data){
+            res.status(200).send("it worked");            
+          })
+          .catch(function(err){
+            console.log("join:err:",err);
+            res.status(400).send("it failed")
+          });
+        }
+      }
+    });
+
   // update a jam session -- NOT TESTED YET, does not yet handle instruments, other lists
   router.route('/update') 
     .post(function(req, res) {

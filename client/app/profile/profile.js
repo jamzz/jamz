@@ -1,13 +1,16 @@
 angular.module("jamz.profile", [])
 
   .controller("ProfileCtrl", function ($scope, Profile) {
+    $scope.editState = false;
+
 
     $scope.getProfile = function () {
-      console.log("HEY!!")
       Profile.getProfile()
       .then(function (data) {
         console.log("I Look like this", data[0])
         $scope.profile = data[0];
+        $scope.newInstruments = $scope.profile.instruments.join(', ');
+        $scope.newBands = $scope.profile.bands.join(', ');
       })
       .catch(function (err) {
         console.error(err)
@@ -15,6 +18,7 @@ angular.module("jamz.profile", [])
     }
 
     $scope.editProfile = function () {
+      $scope.editState = true;
       console.log("you want to edit a profile")
       Profile.editProfile()
       .then(function (data) {
