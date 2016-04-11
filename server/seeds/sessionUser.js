@@ -8,7 +8,7 @@ module.exports = function(db){
       session_id: 1,
       user_id: 2
     },
-  ]).into('session_user')
+  ]).into('session_users')
   .catch(function(err){
     console.log("error inserting session_user seed", err);
   })
