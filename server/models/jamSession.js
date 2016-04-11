@@ -62,7 +62,7 @@ module.exports = function(express) {
         res.status(400).send("/session/create expected a body with a newSession object");
       } else {
         // sanity check input
-        var error = checkCreateBody(req.body.newSession);
+        //var error = checkCreateBody(req.body.newSession);
         if (!error){ // error will contain description of error, false if ok
           var bodyObj = req.body.newSession;
           // build object for insertion into sessions table
@@ -76,48 +76,55 @@ module.exports = function(express) {
           sessionObj.location = bodyObj.location;
           sessionObj.description = bodyObj.description;
           sessionObj.experience = bodyObj.experience;
+          sessionObj.owner = req.user;
           knex.table('session').returning('id').insert(sessionObj)
           .then(function (rows){
             console.log("insert into session returned ", rows);
             var sId = rows[0]; // sId = id of session table, needed for foreign key for inserts
 
             // insert needed instrument (Strings) into needInstrument table
+            console.log("bodyObj.needInstruments",bodyObj.needInstruments)
             var needArr = bodyObj.needInstruments;
             // build array for insert command
             var insertArr = [];
             for (var i=0;i<needArr.length;i++){
-              insertArr.push({sessionId: sId, instrument: needArr[i]});
+              insertArr.push({session_id: sId, instrument: needArr[i]});
             }
-            knex('needInstrument').insert(insertArr)
-
+            return knex('needInstrument').insert(insertArr)
+          })
+          .then(function(data){
             // insert session musicians into session_users table
+            console.log("bodyObj.musicians",bodyObj.musicians)
             var musicians = bodyObj.musicians; // TODO: name of field in body??? How does the user specify another user? By name? By user_id?
             insertArr = [];
-            for (var j=0;i<needArr.length;j++){
-              insertArr.push({sessionId: sId, musician: musicians[j]});
+            for (var j=0;j<musicians.length;j++){
+              insertArr.push({session_id: sId, musician: musicians[j]});
             }
-            knex('session_users').insert(insertArr)
-
+            return knex('session_users').insert(insertArr)  
+          })
+          .then(function(data){
+            // insert session genres into genres table
+            console.log("bodyObj.genres",bodyObj.genres)
+            var genres = bodyObj.genres;
+            insertArr = [];
+            for (var k=0;k<genres.length;k++){
+              insertArr.push({session_id: sId, musician: genres[k]});
+            }
+            knex('genre').insert(insertArr)
             .then(function (result){
               res.status(201).send('Success');
             })
-            .catch(function(err){
+          })
+          .catch(function(err){
               console.log("error inserting session: ", err);
               res.status(400).send("error inserting session: ",err);
             })
-          })
-          .catch(function(err){
-            res.status(400).send("error inserting session");
-          })
-        } else {
-          console.log('jamSession:create:error: ',error);
-          res.status(400).send(error);
+          }
         }
-      }
-    })
-    .all(function(req, res){
-      res.status(404).send("Try using the POST method.");
-    }); 
+      })
+      .all(function(req, res){
+        res.status(404).send("Try using the POST method.");
+      }); 
 
   // delete a jam session
   router.route('/delete')
