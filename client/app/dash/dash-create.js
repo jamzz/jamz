@@ -34,16 +34,12 @@ angular.module('jamz.dash-create', [])
       var check = true;
 
       if (check) {
-        var genres = $scope.genres
+        $scope.genres = $scope.genres
           .split(',')
           .map(function(val){ return val.trim(); })
           .filter(function(val){ return val !== '' })
-          .join(', ')
-          .trim();
 
-          console.log("genres", genres)
-
-        var instruments = $scope.instruments
+        $scope.instruments = $scope.instruments
           .split(',')
           .map(function(val){ return val.trim(); })
           .filter(function(val){ return val !== '' });
@@ -54,10 +50,10 @@ angular.module('jamz.dash-create', [])
         var session = {
           title: $scope.title,
           description: $scope.description,
-          genre: genres,
+          genres: $scope.genres,
           paidAmount: $scope.amount,
           experience: $scope.experience.value,
-          needInstruments: instruments,
+          needInstruments: $scope.instruments,
           area: $scope.city,
           location: $scope.location,
           musicians: [],
