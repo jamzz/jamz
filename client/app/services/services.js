@@ -72,7 +72,7 @@ angular.module("jamz.services", [])
     var createSession = function (data, SID) {
       return $http({
         method: 'POST',
-        url: '/session/create',
+        url: '/session/create?sessionId=' + SID,
         data: {
           newSession: data
         }

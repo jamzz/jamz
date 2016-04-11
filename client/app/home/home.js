@@ -18,13 +18,13 @@ angular.module('jamz.home', [])
       var sessionId = $cookies.get('sessionId');
       Sessions.joinSesh(jamId, sessionId)
       .then(function (data) {
+        $scope.getSessions();
         return data;
       })
       .catch(function (err) {
         console.error(err)
       })
 
-      $scope.getSessions();
     }
 
     $scope.logout = function(){
