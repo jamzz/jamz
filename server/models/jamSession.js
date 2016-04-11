@@ -90,7 +90,7 @@ module.exports = function(express) {
             knex('needInstrument').insert(insertArr)
 
             // insert session musicians into session_users table
-            var musicians = bodyObj.musicians; // TODO: name of field in body???
+            var musicians = bodyObj.musicians; // TODO: name of field in body??? How does the user specify another user? By name? By user_id?
             insertArr = [];
             for (var j=0;i<needArr.length;j++){
               insertArr.push({sessionId: sId, musician: musicians[j]});
@@ -126,10 +126,10 @@ module.exports = function(express) {
       res.status(400).send("/session/delete expected a body with a deleteSession object");
     } else {  // TODO: need to verify this is the owner doing this
         // sanity check input
-        var error = checkDeleteBody(req.body.deleteSession);
+        //console.log("delete bodyObj:",req.body.deleteSession);
+        var error = checkDeleteBody(req.body);
         if (!error){ // error will contain description of error, false if ok
-          var bodyObj = req.body.deleteSession;
-          var sId = bodyObj.sessId;
+          var sId = req.body.deleteSession;
           knex("session")
             .del()
             .where({
@@ -153,7 +153,7 @@ module.exports = function(express) {
     res.status(404).send("Try using the POST method.")
   });
 
-  // update a jam session -- NOT TESTED YET
+  // update a jam session -- NOT TESTED YET, does not yet handle instruments, other lists
   router.route('/update') 
     .post(function(req, res) {
       console.log('received update session POST');
@@ -223,8 +223,8 @@ module.exports = function(express) {
   }
 
   function checkDeleteBody(obj){
-    if (!obj.hasOwnProperty('sessionId') || !(Number.isInteger(obj.sessionId))) {
-      return "sessionId should be an integer value";
+    if (!obj.hasOwnProperty('deleteSession') || !(Number.isInteger(obj.deleteSession))) {
+      return "deleteSession should be an integer value";
     }
     return false;
   }
@@ -250,14 +250,14 @@ module.exports = function(express) {
     });
   }
 
-  function getSessionsByName(sName) {
+  function getSessionsByName(uName) {
     return new Promise(function(resolve,reject){
       var output = [];
       knex('session_users')
       .join('session', 'session_users.session_id', '=', 'session.id')
       .join('users', 'session_users.user_id', '=', 'users.id')
       .where({
-        username: sName
+        username: uName
       })
       .select('session.id')
       .then(function(ids){

@@ -104,6 +104,7 @@ angular.module("jamz.services", [])
       getMySessions: getMySessions,
       editSession: editSession
     }
+
   })
 
   .factory('Profile', function ($http) {
@@ -189,9 +190,11 @@ angular.module("jamz.services", [])
         signup: signup,
         signin: signin
       }
+      
   })
 
   .factory('Search', function ($http) {
+
 
     var searchSessions = function (data) {
       return $http({
