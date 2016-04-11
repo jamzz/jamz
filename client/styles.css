@@ -56,9 +56,15 @@ input {
   margin-right: 5px;
   margin-top: 5px;
 }
+
 .add {
   float: right;
   margin-top: 10px;
+}
+
+
+.jumbotron {
+  background-color: white;
 }
 /*.logout {
   float: right;

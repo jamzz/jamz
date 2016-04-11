@@ -15,7 +15,7 @@
 
     <div>
       <div class="sessions container" ng-repeat='session in sessions'>
-        <div class='col-sm-4'>
+        <div class='col-sm-3'>
           <div>{{session.title}}</div>
           <div>{{session.date}}</div>
           <div>{{session.area}}</div>
@@ -25,19 +25,27 @@
             </div>
           </div>
         </div>
-        <div class='col-sm-4'>
+        <div class='col-sm-3'>
         <div><h5>Instruments Needed:</h5>
             <div ng-repeat="instrument in session.instrumentsNeeded">
               <em>{{instrument}}</em>
             </div>
           </div>
         </div>
-        <div class='col-sm-4'>
+        <div class='col-sm-3'>
           <div><h5>Where:</h5>
             <a href="http://www.stubbsaustin.com">{{session.location}}</a>
           </div>
             <h5>Description:</h5>
           <div>{{session.description}}</div>
+
+          <div>Edit this Session <span class="glyphicon glyphicon-pencil"></span></div>
+        </div>
+        <div class='col-sm-3'>
+          <h5>Musicians:</h5>
+          <div ng-repeat="musician in session.musicians">
+            <em>{{musician}}</em>
+          </div>
 
           <div>Edit this Session <span class="glyphicon glyphicon-pencil"></span></div>
         </div>

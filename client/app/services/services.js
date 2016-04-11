@@ -69,7 +69,7 @@ angular.module("jamz.services", [])
 
   .factory('Dash', function ($http) {
     // create a new session
-    var createSession = function (data) {
+    var createSession = function (data, SID) {
       return $http({
         method: 'POST',
         url: '/session/create',
@@ -216,6 +216,7 @@ angular.module("jamz.services", [])
         data: data
       })
       .then(function (resp) {
+        console.log("resp.data in search sesh", resp.data);
         return resp.data
       })
       .catch(function (err) {
