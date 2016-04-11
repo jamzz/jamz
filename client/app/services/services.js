@@ -88,7 +88,7 @@ angular.module("jamz.services", [])
     var getMySessions = function (sessionId) {
       return $http({
         method: 'GET',
-        url: '/session?sessionId='+sessionId,
+        url: '/session/?sessionId='+sessionId,
       })
       .then(function (resp) {
         return resp.data
@@ -211,7 +211,7 @@ angular.module("jamz.services", [])
       return $http({
         method: 'GET', 
         url: '/session/search', 
-        data: data
+        params: data
       })
       .then(function (resp) {
         return resp.data
@@ -225,7 +225,7 @@ angular.module("jamz.services", [])
       return $http({
         method: 'GET', 
         url: '/user/search',
-        data: data
+        params: data
       })
       .then(function (resp) {
         return resp.data

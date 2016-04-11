@@ -38,6 +38,7 @@ angular.module("jamz.profile", [])
       }
 
       var newProfile = {
+        id: $scope.profile.id
         username: $scope.profile.username,
         name: $scope.profile.name,
         contactEmail: $scope.profile.contactEmail,
