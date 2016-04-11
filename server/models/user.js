@@ -17,9 +17,6 @@ module.exports = function(express) {
       if (rq && rq.id) {
         // handle request for individual user--------------
         console.log("user request for individual user id ",rq.id);
-        //knex('users').where({
-        //  id: rq.id
-        //}).select('*')
         getUserById(rq.id)
         .then(function(data){
           console.log("user:request for user id "+rq.id+" successful. Returning: "+data);
@@ -48,14 +45,15 @@ module.exports = function(express) {
         })
       } else {
         // show all users-------------------------------
-        knex.select().table('users')
+        //knex.select().table('users')
+        getAllUsers()
         .then(function(data){
-          console.log("user:/: returning:", data);
-          res.status(200).send(data);          
+          console.log("user:/: returning:", JSON.stringify(data));
+          res.status(200).send(JSON.stringify(data));          
         })
         .catch(function(err){
           console.log("Error retrieving users list: ", err);
-          res.status(401).send(data);
+          res.status(401).send(err);
         })
       }
     })
@@ -102,6 +100,27 @@ module.exports = function(express) {
       }
     });
 
+  function getAllUsers(){
+    return new Promise(function(resolve,reject){
+      var output = [];
+      knex.select('id').table('users')
+      .then(function(ids){
+        return ids.reduce(function(promise, item) {
+          return promise.then(function() {
+              return getUserById(item.id)
+                .then(function(res) {
+                  output.push(res);
+              });
+          });
+        }, Promise.resolve());
+      })
+      .then(function(data){
+        //console.log("output=",output);
+        resolve(output);
+      })
+    });
+  }
+
   function getUserById(uId){
     return new Promise(function(resolve,reject){
       // handle request for individual user-------------------
@@ -127,12 +146,12 @@ module.exports = function(express) {
         /*
         querythree: function( parCb ){
           console.log("getting friends");
-          var query = knex('user_friend')
-            .join('users', 'user_friends.user_id', '=', 'users.id')
-            .join('users', 'user_friends.user_id', '=', 'users.id')
-          .where({
-            user_id : uId
-          })
+          var query = knex('users')
+            .join('user_friend', 'users.id', '=', 'user_friend.user_id')
+            .join('user_friend', 'users.id', '=', 'user_friend.friend_id')
+          .where('user_friend.user_id', '=', uId)
+          //.orWhere('user_friend.friend_id', '=', uId)
+          //.whereNot('user.id', '=', uId)
           .select('username');
           query.exec( function(err, results ) {
             parCb( err, results );
@@ -171,7 +190,7 @@ module.exports = function(express) {
           var usr = {};
           var instruments = [];
           var bands = [];
-          var friends = [];
+          //var friends = [];
           var sessions = [];
           for (var i=0;i<results.queryone.length;i++){
             instruments.push(results.queryone[i].instrument)
@@ -182,12 +201,13 @@ module.exports = function(express) {
           //for (var k=0;k<results.querythree.length;k++){
           //  friends.push(results.querythree[k].username)
           //}
+          //console.log("friends=",friends);
           usr = results.queryfive[0];
           usr['instruments'] = instruments;
           usr['bands'] = bands;
           //usr['friends'] = friends;
           usr['sessions'] = results.queryfour;
-          console.log("user:request for user by id "+uId+" successful. Returning: "+JSON.stringify(usr));
+          //console.log("user:request for user by id "+uId+" successful. Returning: "+JSON.stringify(usr));
           resolve(usr);
         } 
       })

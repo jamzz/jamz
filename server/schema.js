@@ -46,18 +46,18 @@ knex.schema.createTableIfNotExists('users', function(table) {
 })
 .createTableIfNotExists('session_users', function(table) {
   table.increments('id').primary();
-  table.integer('session_id').references('id').inTable('session');
+  table.integer('session_id').references('id').inTable('session').onDelete('CASCADE');
   table.integer('user_id').references('id').inTable('users');
 })
 .createTableIfNotExists('needInstrument', function(table) {
   table.increments('id').primary();
   table.string('instrument');
-  table.integer('session_id').references('id').inTable('session');
+  table.integer('session_id').references('id').inTable('session').onDelete('CASCADE');
 })
 .createTableIfNotExists('genre', function(table) {
   table.increments('id').primary();
   table.string('genre');
-  table.integer('session_id').references('id').inTable('session');
+  table.integer('session_id').references('id').inTable('session').onDelete('CASCADE');
 })
 .then(function (result) {
   console.log('Successfully applied schema.');
