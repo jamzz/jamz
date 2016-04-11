@@ -45,6 +45,9 @@ input {
   margin-top: 5px;
 }
 
+.jumbotron {
+  background-color: white;
+}
 /*.logout {
   float: right;
 }*/

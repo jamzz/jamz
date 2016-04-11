@@ -203,6 +203,7 @@ angular.module("jamz.services", [])
         data: data
       })
       .then(function (resp) {
+        console.log("resp.data in search sesh", resp.data);
         return resp.data
       })
       .catch(function (err) {
