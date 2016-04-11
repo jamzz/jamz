@@ -24,8 +24,8 @@ app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded({ extended: true }) );
 
 //Routers
-app.use('/user', isLoggedIn, userModel);
-app.use('/session', isLoggedIn, jamSessionModel);
+app.use('/user', userModel);
+app.use('/session', jamSessionModel);
 app.use('/auth', authModel);
 
 //Serve test data

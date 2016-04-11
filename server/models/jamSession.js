@@ -45,7 +45,7 @@ module.exports = function(express) {
         })
         .catch(function(err){
           console.log("Error retrieving session list: ", err);
-          res.status(401).send("Could retrieve sessions, error:",err);
+          res.status(400).send("Could retrieve sessions, error:",err);
         })
       }
     })
@@ -103,11 +103,11 @@ module.exports = function(express) {
             })
             .catch(function(err){
               console.log("error inserting session: ", err);
-              res.status(401).send("error inserting session: ",err);
+              res.status(400).send("error inserting session: ",err);
             })
           })
           .catch(function(err){
-            res.status(401).send("error inserting session");
+            res.status(400).send("error inserting session");
           })
         } else {
           console.log('jamSession:create:error: ',error);
@@ -142,7 +142,7 @@ module.exports = function(express) {
             })
             .catch(function(err){
               console.log("jamSession:error deleting session", err);
-              res.status(401).send("error deleting session", err);
+              res.status(400).send("error deleting session", err);
             })
           } else {
           console.log('jamSession:delete:error: ',error);
@@ -186,7 +186,7 @@ module.exports = function(express) {
           })
           .catch(function(err){
             console.log("jamSession:error updating session", err);
-            res.status(401).send("error updating session", err);
+            res.status(400).send("error updating session", err);
           })
         } else {
         console.log('jamSession:update:error: ',error);

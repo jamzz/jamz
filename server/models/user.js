@@ -53,7 +53,7 @@ module.exports = function(express) {
         })
         .catch(function(err){
           console.log("Error retrieving users list: ", err);
-          res.status(401).send(err);
+          res.status(400).send(err);
         })
       }
     })
@@ -91,7 +91,7 @@ module.exports = function(express) {
           })
           .catch(function(err){
             console.log("user:error updating user", err);
-            res.status(401).send("error updating user", err);
+            res.status(400).send("error updating user", err);
           })
         } else {
         console.log('user:update:error: ',error);
