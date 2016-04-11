@@ -24,9 +24,22 @@ angular.module("jamz.services", [])
       })
     }
 
+    var joinSesh = function (jamId, sessionId) {
+      return $http({
+        method:'POST',
+        url: 'session/join?sessionId='+sessionId, 
+        data: {
+          jamSessionId: jamId
+        }
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
+    }
     return {
       getSessions: getSessions,
-      logout: logout
+      logout: logout, 
+      joinSesh: joinSesh
     }
   })
 
@@ -75,7 +88,7 @@ angular.module("jamz.services", [])
     var getMySessions = function (sessionId) {
       return $http({
         method: 'GET',
-        url: '/session:'+sessionId,
+        url: '/session?sessionId='+sessionId,
       })
       .then(function (resp) {
         return resp.data
@@ -230,8 +243,3 @@ angular.module("jamz.services", [])
       searchUsers: searchUsers
     }
   })
-
-
-
-
-

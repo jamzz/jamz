@@ -6,14 +6,19 @@ input {
   font-family: Warnes-Regular;
   src:url("./assets/warnes/Warnes-Regular.ttf");
 }
+/*.diff.jumbotron {
+  font-family: Warnes-Regular;
+}*/
 .jumbotron {
   background-color: white;
+  font-family: arial, "Times New Roman";
 }
+
 .buttons {
   display: block;
   float: right;
   text-align: center;
-  padding: 5px;
+  padding: 3px;
 }
 .nav {
   font-family: Warnes-Regular;
@@ -22,7 +27,8 @@ input {
   font-family: 'Permanent Marker', cursive;
 }
 .sessions {
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: center;
   padding: 5px;
   background-color:#F8F8F8;
@@ -43,12 +49,19 @@ input {
   padding: 5px;
   background-color:#F8F8F8;
   border-radius: 4.20px;
+  box-shadow:  10px 10px 5px #CDC0C0 ;
 }
 .edit-btn {
   float: right;
   margin-right: 5px;
   margin-top: 5px;
 }
+
+.add {
+  float: right;
+  margin-top: 10px;
+}
+
 
 .jumbotron {
   background-color: white;

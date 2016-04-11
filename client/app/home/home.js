@@ -1,6 +1,6 @@
 angular.module('jamz.home', [])
 
-  .controller('MainCtrl', function ($scope, $location, Sessions) {
+  .controller('MainCtrl', function ($scope, $location, $cookies, Sessions) {
 
     $scope.getSessions = function(){
       Sessions.getSessions()
@@ -11,6 +11,20 @@ angular.module('jamz.home', [])
         .catch(function(err){
           console.error(err);
         })
+    }
+
+    $scope.joinSesh = function() {
+      var jamId = this.session.id;
+      var sessionId = $cookies.get('sessionId');
+      Sessions.joinSesh(jamId, sessionId)
+      .then(function (data) {
+        return data;
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
+
+      $scope.getSessions();
     }
 
     $scope.logout = function(){
