@@ -40,9 +40,9 @@ app.listen(process.env.PORT, function(){
 
 
 function isLoggedIn(req, res, next) {
-  if( !req.cookies ) {
-    throw new Error("Cookes aren't parsed");
-  }
+  // if( !req.cookies ) {
+  //   throw new Error("Cookes aren't parsed");
+  // }
   console.log(req.url, req.method, "---isLoggedIn---", req.body, req.query); //req.cookies, 
   db('users').where({sessionId: req.query.sessionId}).select("username") // used to use req.cookies
   .then(function(row){

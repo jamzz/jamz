@@ -11,6 +11,7 @@ knex.schema.createTableIfNotExists('users', function(table) {
   table.string('picture');
   table.string('contactEmail');
   table.string('contactPhone');
+  table.string('experience');
   table.timestamps();
 })
 .createTableIfNotExists('instrument', function(table){

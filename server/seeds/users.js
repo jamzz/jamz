@@ -8,7 +8,7 @@ module.exports = function(db){
       picture:"http://catpicture.jpg",
       contactEmail:"example@gmail",
       contactPhone:"123-467-2356",
-      sessionId:"asdfasdf"
+      sessionId:"asdf"
     },
     {
       username: "jack",
@@ -28,7 +28,7 @@ module.exports = function(db){
       picture:"http://birdpicture.jpg",
       contactEmail:"example@gmail",
       contactPhone:"973-467-2356",
-      sessionId:"asdfasdf"
+      sessionId:"asdfasdfasdf"
     }
   ]).into('users')
   .catch(function(err){

@@ -409,13 +409,27 @@ module.exports = function(express) {
 
           console.log("req.body", req.body, "req.query", req.query, Object.keys(req.query), Object.keys(req.body))
 
-        res.status(200).send(paginate(filterSessions(req.query, sessions), req.body.page));
+        res.status(200).send(paginate(filterSessions(req.query, sessions), req.query.page));
       })
     })
     .all(function(req, res){
       res.status(404).send("Try get method");
     })
 
+    router.route('/owned') //need sessionId
+       .get(function(req, res){
+          request('http://localhost:1337/session', function(err, response, body) {
+            if(err) console.log(err);
+            var sessions = JSON.parse(body);
+            if(typeof sessions === "string") throw new Error("I wanted an object, thx.")
+            if(!req.query) throw new Error("didn't get a query")
+              console.log("req.body", req.body, "req.query", req.query, Object.keys(req.query), Object.keys(req.body))
+            res.status(200).send(paginate(sessions.filter(byExactMatch.bind(null, req.name, "owner")), req.query.page));
+          })
+       })
+       .all(function(req, res){
+         res.status(404).send("Try get");
+       })
 
   function filterSessions(query, sessions){
     console.log("filterSessions:query:",query, sessions);

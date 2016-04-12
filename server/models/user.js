@@ -65,17 +65,18 @@ module.exports = function(express) {
   // update a user -- NOT TESTED
   router.route('/update') 
     .post(function(req, res) {
-      console.log('received update user POST');
+      console.log('received update user POST', req.body.updateUser);
       if(! req || !req.body || !req.body.updateUser) {
         res.status(400).send("/user/update expected a body with an updateUser object");
       } else {
+        var uId = 0;
        // sanity check input
         var error = false; // TODO: checkUpdateBody(req.body.updateUser);
         if (!error){ // error will contain description of error, false if ok
           var bodyObj = req.body.updateUser;
-          var uId = bodyObj.userId;
+          uId = bodyObj.userId;
           db('users')
-          .where('id', '=', sId)
+          .where('id', '=', uId)
           .update({
             username: bodyObj.username,
             //password: bodyObj.password,
@@ -83,8 +84,33 @@ module.exports = function(express) {
             description: bodyObj.description,
             picture: bodyObj.picture,
             contactEmail: bodyObj.contactEmail,
-            contactPhone: bodyObj.contactPhone
+            contactPhone: bodyObj.contactPhone,
+            experience: bodyObj.experience
           })
+          .then(function (data){
+            // insert instruments (Strings) into instrument table
+            console.log("bodyObj.instruments",bodyObj.instruments)
+            var instArr = bodyObj.instruments;
+            // build array for insert command
+            var insertArr = [];
+            for (var i=0;i<instArr.length;i++){
+              insertArr.push({session_id: uId, instrument: instArr[i]});
+            }
+            console.log("user:create:instrument",insertArr);
+            return knex('instrument').insert(insertArr)
+          })
+          .then(function (data){
+            // insert bands (Strings) into band table
+            console.log("bodyObj.bands",bodyObj.bands)
+            var bandArr = bodyObj.bands;
+            // build array for insert command
+            var insertArr = [];
+            for (var j=0;j<bandArr.length;j++){
+              insertArr.push({session_id: uId, band: bandArr[j]});
+            }
+            console.log("user:create:band",insertArr);
+            return knex('band').insert(insertArr)
+          })  
           .then(function(data){
             console.log("user:user id "+uId+" successfully updated");
             res.status(201).send("user successfully updated:", data);
@@ -215,24 +241,18 @@ module.exports = function(express) {
     });
   }
 
-
-
-
-
-
   // user/search
   router.route('/search')
     .get(function(req, res){
 
-      console.log("----------------req.query------------", req.query);
-
       request('http://localhost:1337/user', function(err, response, body) {
         if(err) console.log(err);
         var users = JSON.parse(body);
-        console.log(typeof users);
 
         if(typeof users === "string") throw new Error("I wanted an object, thx.")
         if(!req.query) throw new Error("didn't get a query")
+
+        console.log("req.body", req.body, "req.query", req.query, Object.keys(req.query), Object.keys(req.body))
 
         res.status(200).send(paginate(filterUsers(req.query, users), req.query.page));
       })
