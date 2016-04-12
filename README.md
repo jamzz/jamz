@@ -1,19 +1,24 @@
 # jamz
 Best way to find a jam session
 
-###Stack
-PostGres w/ Knex
+<h3>Stack</h3>
+<p>PostGres w/ Knex</p>
+<p>Express</p>
+<p>Angular</p>
+<p>Node</p>
 
-Express
 
-Angular
 
-Node
+
+
 
 ####Authentication
 Local (from scratch) with functional middleware
-
+<p></p>
 ####Angular
+<p></p>
+<p></p>
+<p></p><p></p>
 ui-router
 
 ng-animater
