@@ -168,7 +168,7 @@ module.exports = function(express) {
     res.status(404).send("Try using the POST method.")
   });
 
-  // join a jam session -- NOT TESTED YET
+  // join a jam session
   router.route('/join') 
     .post(function(req, res) {
       console.log('received join session POST');
@@ -197,7 +197,7 @@ module.exports = function(express) {
       }
     });
 
-  // update a jam session -- NOT TESTED YET, does not yet handle instruments, other lists
+  // update a jam session -- NOT TESTED YET, does not yet handle instruments, bands
   router.route('/update') 
     .post(function(req, res) {
       console.log('received update session POST');
@@ -266,6 +266,7 @@ module.exports = function(express) {
     return false;
   }
 
+  // this function checks to insure the value supplied is an integer
   function checkDeleteBody(obj){
     if (!obj.hasOwnProperty('deleteSession') || !(Number.isInteger(obj.deleteSession))) {
       return "deleteSession should be an integer value";
@@ -273,16 +274,17 @@ module.exports = function(express) {
     return false;
   }
 
+  // this function will return all sessions in the session table
   function getAllSessions(){
     return new Promise(function(resolve,reject){
       var output = [];
-      knex.select('id').table('session')
-      .then(function(ids){
+      knex.select('id').table('session') // get all the session id's
+      .then(function(ids){   // then go through them,
         return ids.reduce(function(promise, item) {
-          return promise.then(function() {
+          return promise.then(function() { // getting the data for each
               return getSessionById(item.id)
                 .then(function(res) {
-                  output.push(res);
+                  output.push(res); // and pushing it onto the output array
               });
           });
         }, Promise.resolve());
@@ -294,22 +296,25 @@ module.exports = function(express) {
     });
   }
 
+  // this function goes through the session_users join table and gets
+  // all the session id's that a user is attached to. It then goes
+  // through that list and collects the session data for each
   function getSessionsByName(uName) {
     return new Promise(function(resolve,reject){
       var output = [];
-      knex('session_users')
+      knex('session_users')  // get all the id's with a triple double on the three tables
       .join('session', 'session_users.session_id', '=', 'session.id')
       .join('users', 'session_users.user_id', '=', 'users.id')
       .where({
-        username: uName
+        username: uName   // select by username in the users table
       })
-      .select('session.id')
+      .select('session.id')   // get the session id associated with each
       .then(function(ids){
-        return ids.reduce(function(promise, item) {
+        return ids.reduce(function(promise, item) { // go thru those id's
           return promise.then(function() {
-              return getSessionById(item.id)
+              return getSessionById(item.id)  // and get the data for each
                 .then(function(res) {
-                  output.push(res);
+                  output.push(res);  // and push it onto the output array
               });
           });
         }, Promise.resolve());
@@ -321,9 +326,20 @@ module.exports = function(express) {
     });
   }
 
+  // This function is called by the two above functions to collect jam session data
+  // it is passed an id value (the key of the session table) and returns the requested
+  // data. It uses the async library to parallelize the requests for the data from
+  // other tables that hold data for the request (such as needInstruments, and the 
+  // session_users join table). It starts each query, then when all have completed it
+  // puts the collected information together into the response.
   function getSessionById(sId){
     return new Promise(function(resolve,reject){
       // handle request for individual session-------------------
+      // Make four different queries at the same time
+      // one for the session genre info
+      // one for the needed instruments info
+      // one for the participants info
+      // and one for the session info
       async.parallel({
         queryone: function( parCb ){
           console.log("getting genres");
@@ -366,6 +382,8 @@ module.exports = function(express) {
           } );
         },
       },
+      // once all the requests have completed, put the information together into
+      // the response
       function(err, results) {
         if (err){
           console.log("Error getting session data, id="+sId+", err:",err);
