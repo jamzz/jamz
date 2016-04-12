@@ -1,68 +1,50 @@
-<h2>jamz</h2>
-<p>Best way to find a jam session </p>
-
-<h3>Stack</h3>
-<p>PostGres w/ Knex</p>
-<p>Express</p>
-<p>Angular</p>
-<p>Node</p>
-
-<h4>Authentication</h4>
-<p>Local (from scratch) with functional middleware</p>
-
-<h4>Angular</h4>
-<p>ui-router</p>
-<p>ng-animater</p>
-<p>ui-bootstrap</p>
-
-<h4>Grunt (2 tasks)</h4>
-<p>Lint backend</p>
-<p>initdb</p>
-<p>postgres -D stuff</p>
-<p>createdb</p>
-<p>create the schema</p>
-<p>seed the db</p>
-<p>start nodemon</p>
-
-####Database
-<p>Automated by Gruntfile</p>
-<p>9 tables</p>
-
-###Working Features
-<p>Create new session</p>
-<p>Login / Logout / Sign Up</p>
-<p>Get all users/sessions</p>
-<p>Search users/sessions (can be polished, is very picky)</p>
-<p>Join a session (as a user)</p>
-
-
-
-
-
-
-
-
-
-
-
-
-###In-Progress
-####Not integrated with front end
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-delete a session
-
-Get all users that are in your session
-
-Get all sessions that a user has
-
-Get all sessions a user is hosting
-
-####Not integrated with back end
-edit a session
-
-###To-do
-Currently the dashboard does not get sessions owned by the current user.
-This is tied to the ability to edit and delete your hosted sessions.
+<br><h2>StompBox</h2>
+<div>Best way to find a jam session </div>
+<br>
+<h2>Stack</h2>
+<div>PostGres w/ Knex</div>
+<div>Express</div>
+<div>Angular</div>
+<div>Node</div>
+<br>
+<h3>Authentication</h3>
+<div>Local (from scratch) with functional middleware</div>
+<br>
+<h3>Angular</h3>
+<div>ui-router</div>
+<div>ng-animater</div>
+<div>ui-bootstrap</div>
+<br>
+<h3>Grunt (2 tasks)</h3>
+<div>Lint backend</div>
+<div>initdb</div>
+<div>postgres -D stuff</div>
+<div>createdb</div>
+<div>create the schema</div>
+<div>seed the db</div>
+<div>start nodemon</div>
+<br>
+<h3>Database</h3>
+<div>Automated by Gruntfile</div>
+<div>9 tables</div>
+<br>
+<h3>Working Features</h3>
+<div>Create new session</div>
+<div>Login / Logout / Sign Up</div>
+<div>Get all users/sessions</div>
+<div>Search users/sessions (can be polished, is very picky)</div>
+<div>Join a session (as a user)</div>
+<br>
+<h3>In-Progress</h3>
+<h4>Not integrated with front end</h4>
+<div>Get all users that are in your session</div>
+<div>delete a session</div>
+<div>Get all sessions that a user has</div>
+<div>Get all sessions a user is hosting</div>
+<br>
+<h4>Not integrated with back end</h4>
+<div>edit a session</div>
+<br>
+<h3>To-do</h3>
+<div>Currently the dashboard does not get sessions owned by the current user.
+This is tied to the ability to edit and delete your hosted sessions.</div>
