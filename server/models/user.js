@@ -62,7 +62,7 @@ module.exports = function(express) {
       res.status(404).send("Try using the GET method.")
     })
 
-  // update a user -- NOT TESTED
+  // update a user - receives information from the client and updates the db
   router.route('/update') 
     .post(function(req, res) {
       console.log('received update user POST', req.body.updateUser);
@@ -126,16 +126,17 @@ module.exports = function(express) {
       }
     });
 
+// this function will return all users in the users table
   function getAllUsers(){
     return new Promise(function(resolve,reject){
       var output = [];
-      knex.select('id').table('users')
-      .then(function(ids){
+      knex.select('id').table('users') // get all the session id's
+      .then(function(ids){     // then go through them,
         return ids.reduce(function(promise, item) {
-          return promise.then(function() {
+          return promise.then(function() {  // getting the data for each
               return getUserById(item.id)
                 .then(function(res) {
-                  output.push(res);
+                  output.push(res);  // and pushing it onto the output array
               });
           });
         }, Promise.resolve());
@@ -147,9 +148,20 @@ module.exports = function(express) {
     });
   }
 
+  // This function is called by the above function to collect user data.
+  // it is passed an id value (the key of the user table) and returns the requested
+  // data. It uses the async library to parallelize the requests for the data from
+  // other tables that hold data for the request (such as instruments, bands, and the 
+  // session_users join table). It starts each query, then when all have completed it
+  // puts the collected information together into the response.
   function getUserById(uId){
     return new Promise(function(resolve,reject){
       // handle request for individual user-------------------
+      // Make four different queries at the same time
+      // one for the instrument info
+      // one for the band info
+      // one for the sessions info
+      // and one for the user info
       async.parallel({
         queryone: function( parCb ){
           console.log("getting instruments");
@@ -169,7 +181,7 @@ module.exports = function(express) {
             parCb( err, results );
           } );
         },
-        /*
+        /*  this was a feature that we wanted to implement but ran out of time on
         querythree: function( parCb ){
           console.log("getting friends");
           var query = knex('users')
@@ -207,6 +219,8 @@ module.exports = function(express) {
           } );
         },
       },
+      // once all the requests have completed, put the information together into
+      // the response
       function(err, results) {
         if (err){
           console.log("Error getting user data, id="+uId+", err:",err);
