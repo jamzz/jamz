@@ -3,8 +3,11 @@ Best way to find a jam session
 
 ###Stack
 PostGres w/ Knex
+
 Express
+
 Angular
+
 Node
 
 ####Authentication
